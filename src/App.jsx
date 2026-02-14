@@ -5,6 +5,11 @@ import DashboardLayout from './layouts/DashboardLayout';
 import LandingPage from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Profile from './pages/Profile';
+import PublicHeatmap from './pages/PublicHeatmap';
+import PublicPrediction from './pages/PublicPrediction';
+import PublicSafeRoute from './pages/PublicSafeRoute';
+import PublicCompare from './pages/PublicCompare';
 import Overview from './pages/dashboard/Overview';
 import HeatmapPage from './pages/dashboard/Heatmap';
 import SafeRoute from './pages/dashboard/SafeRoute';
@@ -24,6 +29,11 @@ function App() {
             {/* Public Routes */}
             <Route element={<MainLayout />}>
                 <Route path="/" element={<LandingPage />} />
+                <Route path="/heatmap" element={<PublicHeatmap />} />
+                <Route path="/prediction" element={<PublicPrediction />} />
+                <Route path="/safe-route" element={<PublicSafeRoute />} />
+                <Route path="/compare" element={<PublicCompare />} />
+                <Route path="/profile" element={<Profile />} />
                 <Route path="/selection" element={<AccessSelection />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />

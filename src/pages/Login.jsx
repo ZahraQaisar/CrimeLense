@@ -3,9 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Input from '../components/common/Input';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
     const navigate = useNavigate();
+    const { login } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -18,8 +20,17 @@ const Login = () => {
         setLoading(true);
         // Simulate API call
         setTimeout(() => {
+            // Mock user data
+            const userData = {
+                name: formData.email.split('@')[0].charAt(0).toUpperCase() + formData.email.split('@')[0].slice(1),
+                email: formData.email,
+                displayPicture: null // No DP by default
+            };
+
+            login(userData);
             setLoading(false);
-            navigate('/dashboard');
+            // Temporarily redirect to homepage for testing (instead of /dashboard)
+            navigate('/');
         }, 1500);
     };
 

@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
   body {
     @apply bg-deep-navy text-white font-sans antialiased;
     background-image: radial-gradient(circle at center, #0F172A 0%, #0B1220 100%);

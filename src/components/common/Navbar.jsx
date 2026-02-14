@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Shield, Activity, Map, Lock } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, Shield, User, LogOut } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
+    const { isAuthenticated, user, logout } = useAuth();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -20,10 +24,19 @@ const Navbar = () => {
     const navLinks = [
         { name: 'Features', path: '/#features' },
         { name: 'How It Works', path: '/#how-it-works' },
-        { name: 'Dashboard', path: '/dashboard' },
-        { name: 'Insights', path: '/insights' },
         { name: 'About', path: '/about' },
     ];
+
+    const handleLogout = () => {
+        logout();
+        setShowDropdown(false);
+        navigate('/');
+    };
+
+    const getUserInitials = () => {
+        if (!user?.name) return 'U';
+        return user.name.charAt(0).toUpperCase();
+    };
 
     return (
         <nav
@@ -60,14 +73,63 @@ const Navbar = () => {
 
                     {/* Desktop CTA */}
                     <div className="hidden md:flex items-center gap-4">
+                        {isAuthenticated ? (
+                            <div
+                                className="relative"
+                                onMouseEnter={() => setShowDropdown(true)}
+                                onMouseLeave={() => setShowDropdown(false)}
+                            >
+                                {/* User Icon */}
+                                <button className="flex items-center justify-center w-10 h-10 rounded-full bg-neon-teal/20 border-2 border-neon-teal/50 text-neon-teal font-bold hover:bg-neon-teal/30 transition-all duration-300 shadow-[0_0_15px_rgba(20,241,217,0.2)] hover:shadow-[0_0_25px_rgba(20,241,217,0.4)]">
+                                    {user?.displayPicture ? (
+                                        <img src={user.displayPicture} alt={user.name} className="w-full h-full rounded-full object-cover" />
+                                    ) : (
+                                        <span className="text-sm">{getUserInitials()}</span>
+                                    )}
+                                </button>
+
+                                {/* Dropdown Menu */}
+                                <AnimatePresence>
+                                    {showDropdown && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: -10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -10 }}
+                                            transition={{ duration: 0.2 }}
+                                            className="absolute right-0 mt-2 w-48 glass-panel rounded-xl border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.3)] overflow-hidden"
+                                        >
+                                            <div className="py-2">
+                                                <Link
+                                                    to="/profile"
+                                                    className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:bg-white/5 hover:text-neon-teal transition-colors"
+                                                    onClick={() => setShowDropdown(false)}
+                                                >
+                                                    <User size={18} />
+                                                    <span className="text-sm font-medium">Profile</span>
+                                                </Link>
+                                                <div className="h-px bg-white/10 my-1" />
+                                                <button
+                                                    onClick={handleLogout}
+                                                    className="w-full flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:bg-white/5 hover:text-danger transition-colors"
+                                                >
+                                                    <LogOut size={18} />
+                                                    <span className="text-sm font-medium">Log Out</span>
+                                                </button>
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                        ) : (
+                            <Link
+                                to="/login"
+                                className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
+                            >
+                                Login
+                            </Link>
+                        )}
                         <Link
-                            to="/login"
-                            className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
-                        >
-                            Login
-                        </Link>
-                        <Link
-                            to="/signup"
+                            to="/heatmap"
                             className="px-5 py-2.5 rounded-lg bg-neon-teal/10 text-neon-teal border border-neon-teal/50 font-semibold hover:bg-neon-teal hover:text-deep-navy transition-all duration-300 shadow-[0_0_15px_rgba(20,241,217,0.2)] hover:shadow-[0_0_25px_rgba(20,241,217,0.4)]"
                         >
                             Get Started
@@ -105,15 +167,38 @@ const Navbar = () => {
                                 </a>
                             ))}
                             <div className="h-px bg-white/10 my-2" />
+                            {isAuthenticated ? (
+                                <>
+                                    <Link
+                                        to="/profile"
+                                        onClick={() => setIsOpen(false)}
+                                        className="flex items-center gap-3 text-lg font-medium text-gray-300 hover:text-neon-teal transition-colors"
+                                    >
+                                        <User size={20} />
+                                        Profile
+                                    </Link>
+                                    <button
+                                        onClick={() => {
+                                            handleLogout();
+                                            setIsOpen(false);
+                                        }}
+                                        className="flex items-center gap-3 text-lg font-medium text-gray-300 hover:text-danger transition-colors text-left"
+                                    >
+                                        <LogOut size={20} />
+                                        Log Out
+                                    </button>
+                                </>
+                            ) : (
+                                <Link
+                                    to="/login"
+                                    onClick={() => setIsOpen(false)}
+                                    className="text-lg font-medium text-gray-300 hover:text-white transition-colors"
+                                >
+                                    Login
+                                </Link>
+                            )}
                             <Link
-                                to="/login"
-                                onClick={() => setIsOpen(false)}
-                                className="text-lg font-medium text-gray-300 hover:text-white transition-colors"
-                            >
-                                Login
-                            </Link>
-                            <Link
-                                to="/signup"
+                                to="/heatmap"
                                 onClick={() => setIsOpen(false)}
                                 className="w-full py-3 rounded-xl bg-neon-teal text-deep-navy font-bold text-center shadow-[0_0_20px_rgba(20,241,217,0.3)] hover:shadow-[0_0_30px_rgba(20,241,217,0.5)] transition-all"
                             >

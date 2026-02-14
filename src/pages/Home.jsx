@@ -31,7 +31,7 @@ const LandingPage = () => {
 
                     <div className="flex flex-col md:flex-row gap-4 justify-center">
                         <Link
-                            to="/signup"
+                            to="/heatmap"
                             className="px-8 py-4 rounded-xl bg-neon-teal text-deep-navy font-bold text-lg hover:bg-white transition-all duration-300 shadow-[0_0_20px_rgba(20,241,217,0.4)] hover:shadow-[0_0_30px_rgba(20,241,217,0.6)]"
                         >
                             Get Started Now
@@ -47,7 +47,7 @@ const LandingPage = () => {
             </section>
 
             {/* Features Grid */}
-            <section className="py-20 px-6 lg:px-8 max-w-7xl mx-auto">
+            <section id="features" className="py-20 px-6 lg:px-8 max-w-7xl mx-auto">
                 <div className="grid md:grid-cols-3 gap-8">
                     {[
                         {
@@ -84,6 +84,51 @@ const LandingPage = () => {
                                 {feature.desc}
                             </p>
                         </motion.div>
+                    ))}
+                </div>
+            </section>
+
+            {/* How It Works Section */}
+            <section id="how-it-works" className="py-20 px-6 lg:px-8 max-w-7xl mx-auto relative">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+                        How <span className="text-neon-teal">CrimeLense</span> Works
+                    </h2>
+                    <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                        Our advanced AI processes real-time data to keep you safe in three simple steps.
+                    </p>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-8 relative">
+                    {/* Connecting Line (Desktop) */}
+                    <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-neon-teal/30 to-transparent -z-10" />
+
+                    {[
+                        {
+                            step: "01",
+                            title: "Data Collection",
+                            desc: "We aggregate crime reports, police data, and community inputs in real-time."
+                        },
+                        {
+                            step: "02",
+                            title: "AI Analysis",
+                            desc: "Our algorithms process patterns to identify risk zones and safe routes."
+                        },
+                        {
+                            step: "03",
+                            title: "Safe Navigation",
+                            desc: "You receive instant alerts and optimized routes for your journey."
+                        }
+                    ].map((item, idx) => (
+                        <div key={idx} className="relative flex flex-col items-center text-center">
+                            <div className="w-24 h-24 rounded-full bg-deep-navy border-2 border-neon-teal/30 flex items-center justify-center text-3xl font-bold text-neon-teal mb-6 shadow-[0_0_20px_rgba(20,241,217,0.2)] bg-opacity-80 backdrop-blur-sm z-10">
+                                {item.step}
+                            </div>
+                            <h3 className="text-2xl font-bold text-white mb-4">{item.title}</h3>
+                            <p className="text-gray-400 leading-relaxed max-w-sm">
+                                {item.desc}
+                            </p>
+                        </div>
                     ))}
                 </div>
             </section>
