@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const RiskGauge = ({ score }) => {
     // score 0-100
-    const radius = 80;
+    const radius = 95;
     const stroke = 12;
     const normalizedRadius = radius - stroke * 2;
     const circumference = normalizedRadius * 2 * Math.PI;
@@ -18,7 +18,7 @@ const RiskGauge = ({ score }) => {
     const color = getColor(score);
 
     return (
-        <div className="relative flex items-center justify-center w-64 h-64 mx-auto">
+        <div className="relative flex items-center justify-center mx-auto" style={{ width: radius * 2, height: radius * 2 }}>
             {/* Background Circle */}
             <svg
                 height={radius * 2}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Navigation, MapPin, ShieldCheck, AlertTriangle, ArrowLeft } from 'lucide-react';
+import { Navigation, MapPin, ShieldCheck, AlertTriangle } from 'lucide-react';
 import CrimeMap from '../components/map/CrimeMap';
 import Input from '../components/common/Input';
 import { motion } from 'framer-motion';
@@ -9,10 +9,20 @@ const PublicSafeRoute = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState(null);
-    const [formData, setFormData] = useState({
-        start: '',
-        end: ''
+    const [formData, setFormData] = useState(() => {
+        try {
+            const saved = localStorage.getItem('cl_saferoute_form');
+            return saved ? JSON.parse(saved) : { start: '', end: '' };
+        } catch {
+            return { start: '', end: '' };
+        }
     });
+
+    const updateForm = (patch) => {
+        const updated = { ...formData, ...patch };
+        setFormData(updated);
+        localStorage.setItem('cl_saferoute_form', JSON.stringify(updated));
+    };
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -58,30 +68,23 @@ const PublicSafeRoute = () => {
     };
 
     return (
-        <div className="min-h-screen pt-20 pb-12 px-6 lg:px-8">
+        <div className="min-h-screen pt-16 pb-8 px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
-                <div className="text-center mb-8">
+                <div className="text-center mb-5">
                     <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
                         Safe <span className="text-neon-teal">Route Finder</span>
                     </h1>
-                    <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                    <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                         Find the safest path to your destination, avoiding high-risk areas.
                     </p>
                 </div>
 
-                {/* Back Button */}
-                <button
-                    onClick={() => navigate('/prediction')}
-                    className="mb-6 flex items-center gap-2 text-gray-400 hover:text-neon-teal transition-colors"
-                >
-                    <ArrowLeft size={20} />
-                    Back to Prediction
-                </button>
 
-                <div className="flex flex-col lg:flex-row gap-6">
+
+                <div className="flex flex-col lg:flex-row gap-6 items-stretch">
                     {/* Route Panel */}
-                    <div className="w-full lg:w-96 glass-panel p-6 rounded-2xl border border-white/5 flex flex-col h-fit">
+                    <div className="w-full lg:w-96 glass-panel p-6 rounded-2xl border border-white/5 flex flex-col">
                         <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                             <Navigation className="text-neon-teal" />
                             Route Details
@@ -93,7 +96,7 @@ const PublicSafeRoute = () => {
                                 placeholder="Current Location"
                                 icon={MapPin}
                                 value={formData.start}
-                                onChange={(e) => setFormData({ ...formData, start: e.target.value })}
+                                onChange={(e) => updateForm({ start: e.target.value })}
                                 required
                             />
                             <Input
@@ -101,7 +104,7 @@ const PublicSafeRoute = () => {
                                 placeholder="Search destination..."
                                 icon={MapPin}
                                 value={formData.end}
-                                onChange={(e) => setFormData({ ...formData, end: e.target.value })}
+                                onChange={(e) => updateForm({ end: e.target.value })}
                                 required
                             />
                             <button
@@ -153,7 +156,7 @@ const PublicSafeRoute = () => {
                     </div>
 
                     {/* Map */}
-                    <div className="flex-1 glass-panel rounded-2xl overflow-hidden border border-white/5 h-[600px]">
+                    <div className="flex-1 glass-panel rounded-2xl overflow-hidden border border-white/5 min-h-[600px]">
                         <CrimeMap
                             polylines={result?.polylines}
                             markers={result?.markers || []}
