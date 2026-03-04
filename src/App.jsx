@@ -19,6 +19,9 @@ import Compare from './pages/dashboard/Compare';
 import AdminLayout from './layouts/AdminLayout';
 import AdminOverview from './pages/admin/AdminOverview';
 import ManageHotspots from './pages/admin/ManageHotspots';
+import UserManagement from './pages/admin/UserManagement';
+import IncidentLogs from './pages/admin/IncidentLogs';
+import SystemSettings from './pages/admin/SystemSettings';
 import AccessSelection from './pages/AccessSelection';
 import AboutPage from './pages/About';
 import { DashboardHome } from './pages/AuthPlaceholders';
@@ -64,9 +67,9 @@ function App() {
             }>
                 <Route index element={<AdminOverview />} />
                 <Route path="hotspots" element={<ManageHotspots />} />
-                <Route path="users" element={<div className="text-white p-8">User Management Placeholder</div>} />
-                <Route path="logs" element={<div className="text-white p-8">Incident Logs Placeholder</div>} />
-                <Route path="settings" element={<div className="text-white p-8">Settings Placeholder</div>} />
+                <Route path="users" element={<UserManagement />} />
+                <Route path="logs" element={<IncidentLogs />} />
+                <Route path="settings" element={<SystemSettings />} />
             </Route>
         </Routes>
     );
