@@ -125,12 +125,6 @@ const Navbar = () => {
                                 Login
                             </Link>
                         )}
-                        <Link
-                            to="/prediction"
-                            className="px-5 py-2.5 rounded-lg bg-neon-teal/10 text-neon-teal border border-neon-teal/50 font-semibold hover:bg-neon-teal hover:text-deep-navy transition-all duration-300 shadow-[0_0_15px_rgba(20,241,217,0.2)] hover:shadow-[0_0_25px_rgba(20,241,217,0.4)]"
-                        >
-                            Get Started
-                        </Link>
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -194,13 +188,7 @@ const Navbar = () => {
                                     Login
                                 </Link>
                             )}
-                            <Link
-                                to="/prediction"
-                                onClick={() => setIsOpen(false)}
-                                className="w-full py-3 rounded-xl bg-neon-teal text-deep-navy font-bold text-center shadow-[0_0_20px_rgba(20,241,217,0.3)] hover:shadow-[0_0_30px_rgba(20,241,217,0.5)] transition-all"
-                            >
-                                Get Started
-                            </Link>
+
                         </div>
                     </motion.div>
                 )}

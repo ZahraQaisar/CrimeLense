@@ -20,6 +20,7 @@ import AdminLayout from './layouts/AdminLayout';
 import AdminOverview from './pages/admin/AdminOverview';
 import ManageHotspots from './pages/admin/ManageHotspots';
 import AccessSelection from './pages/AccessSelection';
+import AboutPage from './pages/About';
 import { DashboardHome } from './pages/AuthPlaceholders';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
@@ -37,7 +38,7 @@ function App() {
                 <Route path="/selection" element={<AccessSelection />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
-                <Route path="/about" element={<div className="text-white p-10">About Page Placeholder</div>} />
+                <Route path="/about" element={<AboutPage />} />
             </Route>
 
             {/* Protected Dashboard Routes */}

@@ -1,13 +1,14 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from '../components/common/Navbar';
+import Footer from '../components/common/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const MainLayout = () => {
     return (
-        <div className="min-h-screen bg-deep-navy selection:bg-neon-teal/30 selection:text-neon-teal">
+        <div className="min-h-screen bg-deep-navy selection:bg-neon-teal/30 selection:text-neon-teal flex flex-col">
             <Navbar />
-            <main className="pt-20">
+            <main className="pt-20 flex-1">
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={useLocation().pathname}
@@ -20,6 +21,7 @@ const MainLayout = () => {
                     </motion.div>
                 </AnimatePresence>
             </main>
+            <Footer />
         </div>
     );
 };
