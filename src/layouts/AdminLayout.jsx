@@ -1,9 +1,17 @@
 import React from 'react';
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Map, Users, Settings, LogOut, ShieldAlert } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { useAuth } from '../context/AuthContext';
 
 const AdminLayout = () => {
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
     const menuItems = [
         { icon: LayoutDashboard, label: 'System Overview', path: '/admin' },
         { icon: Map, label: 'Manage Hotspots', path: '/admin/hotspots' },
@@ -42,7 +50,7 @@ const AdminLayout = () => {
                 </div>
 
                 <div className="p-4 border-t border-white/10">
-                    <button className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-300">
+                    <button onClick={handleLogout} className="flex items-center gap-3 w-full px-3 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-300">
                         <LogOut size={20} />
                         <span className="font-medium">Logout</span>
                     </button>
