@@ -7,7 +7,7 @@ const LandingPage = () => {
     return (
         <div className="relative overflow-hidden">
             {/* Hero Section */}
-            <section className="relative pt-12 pb-20 px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center text-center">
+            <section className="relative pt-10 pb-14 px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center text-center">
                 {/* Background Glow */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-neon-teal/20 blur-[100px] rounded-full -z-10" />
 
@@ -31,7 +31,7 @@ const LandingPage = () => {
 
                     <div className="flex flex-col md:flex-row gap-4 justify-center">
                         <Link
-                            to="/heatmap"
+                            to="/prediction"
                             className="px-8 py-4 rounded-xl bg-neon-teal text-deep-navy font-bold text-lg hover:bg-white transition-all duration-300 shadow-[0_0_20px_rgba(20,241,217,0.4)] hover:shadow-[0_0_30px_rgba(20,241,217,0.6)]"
                         >
                             Get Started Now
@@ -47,7 +47,7 @@ const LandingPage = () => {
             </section>
 
             {/* Features Grid */}
-            <section id="features" className="py-20 px-6 lg:px-8 max-w-7xl mx-auto">
+            <section id="features" className="py-12 px-6 lg:px-8 max-w-7xl mx-auto">
                 <div className="grid md:grid-cols-3 gap-8">
                     {[
                         {
@@ -89,8 +89,8 @@ const LandingPage = () => {
             </section>
 
             {/* How It Works Section */}
-            <section id="how-it-works" className="py-20 px-6 lg:px-8 max-w-7xl mx-auto relative">
-                <div className="text-center mb-16">
+            <section id="how-it-works" className="py-12 px-6 lg:px-8 max-w-7xl mx-auto relative">
+                <div className="text-center mb-10">
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
                         How <span className="text-neon-teal">CrimeLense</span> Works
                     </h2>

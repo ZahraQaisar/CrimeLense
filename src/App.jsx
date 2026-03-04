@@ -6,7 +6,7 @@ import LandingPage from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
-import PublicHeatmap from './pages/PublicHeatmap';
+
 import PublicPrediction from './pages/PublicPrediction';
 import PublicSafeRoute from './pages/PublicSafeRoute';
 import PublicCompare from './pages/PublicCompare';
@@ -29,7 +29,7 @@ function App() {
             {/* Public Routes */}
             <Route element={<MainLayout />}>
                 <Route path="/" element={<LandingPage />} />
-                <Route path="/heatmap" element={<PublicHeatmap />} />
+
                 <Route path="/prediction" element={<PublicPrediction />} />
                 <Route path="/safe-route" element={<PublicSafeRoute />} />
                 <Route path="/compare" element={<PublicCompare />} />

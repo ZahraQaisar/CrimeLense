@@ -25,14 +25,14 @@ const PublicCompare = () => {
     };
 
     return (
-        <div className="min-h-screen pt-20 pb-12 px-6 lg:px-8">
+        <div className="min-h-screen pt-16 pb-8 px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
-                <div className="text-center mb-8">
+                <div className="text-center mb-5">
                     <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
                         Compare <span className="text-neon-teal">Areas</span>
                     </h1>
-                    <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                    <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                         Compare crime statistics between different areas to make informed decisions.
                     </p>
                 </div>
@@ -46,7 +46,7 @@ const PublicCompare = () => {
                     Back to Prediction
                 </button>
 
-                <div className="space-y-6">
+                <div className="space-y-4">
                     <div className="glass-panel p-6 rounded-2xl border border-white/5">
                         <h2 className="text-xl font-bold text-white mb-6">Area Comparison</h2>
                         <div className="flex flex-col md:flex-row gap-4 items-end">
@@ -81,7 +81,7 @@ const PublicCompare = () => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         {/* Risk Score Comparison */}
                         <div className="glass-panel p-6 rounded-2xl border border-white/5">
                             <h3 className="text-lg font-semibold text-white mb-6">Overall Risk Score</h3>

@@ -40,10 +40,7 @@ const Navbar = () => {
 
     return (
         <nav
-            className={cn(
-                "fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-transparent",
-                scrolled ? "bg-deep-navy/80 backdrop-blur-lg border-white/5" : "bg-transparent"
-            )}
+            className="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b bg-deep-navy/90 backdrop-blur-lg border-white/5"
         >
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
                 <div className="flex items-center justify-between h-20">
@@ -129,7 +126,7 @@ const Navbar = () => {
                             </Link>
                         )}
                         <Link
-                            to="/heatmap"
+                            to="/prediction"
                             className="px-5 py-2.5 rounded-lg bg-neon-teal/10 text-neon-teal border border-neon-teal/50 font-semibold hover:bg-neon-teal hover:text-deep-navy transition-all duration-300 shadow-[0_0_15px_rgba(20,241,217,0.2)] hover:shadow-[0_0_25px_rgba(20,241,217,0.4)]"
                         >
                             Get Started
@@ -198,7 +195,7 @@ const Navbar = () => {
                                 </Link>
                             )}
                             <Link
-                                to="/heatmap"
+                                to="/prediction"
                                 onClick={() => setIsOpen(false)}
                                 className="w-full py-3 rounded-xl bg-neon-teal text-deep-navy font-bold text-center shadow-[0_0_20px_rgba(20,241,217,0.3)] hover:shadow-[0_0_30px_rgba(20,241,217,0.5)] transition-all"
                             >
