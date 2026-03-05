@@ -1,35 +1,19 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Navigation, MapPin, ShieldCheck, AlertTriangle } from 'lucide-react';
 import CrimeMap from '../components/map/CrimeMap';
 import Input from '../components/common/Input';
 import { motion } from 'framer-motion';
+import ToolsSidebar from '../components/common/ToolsSidebar';
 
 const PublicSafeRoute = () => {
-    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState(null);
-    const [formData, setFormData] = useState(() => {
-        try {
-            const saved = localStorage.getItem('cl_saferoute_form');
-            return saved ? JSON.parse(saved) : { start: '', end: '' };
-        } catch {
-            return { start: '', end: '' };
-        }
-    });
-
-    const updateForm = (patch) => {
-        const updated = { ...formData, ...patch };
-        setFormData(updated);
-        localStorage.setItem('cl_saferoute_form', JSON.stringify(updated));
-    };
+    const [formData, setFormData] = useState({ start: '', end: '' });
 
     const handleSearch = (e) => {
         e.preventDefault();
         setLoading(true);
         setResult(null);
-
-        // Mock Route Calculation
         setTimeout(() => {
             setLoading(false);
             setResult({
@@ -37,23 +21,13 @@ const PublicSafeRoute = () => {
                 distance: "4.2 km",
                 eta: "14 mins",
                 polylines: [
-                    // Safe Route (Green)
                     {
-                        positions: [
-                            [51.505, -0.09],
-                            [51.51, -0.1],
-                            [51.515, -0.12]
-                        ],
-                        color: "#22C55E", // Safe Green
+                        positions: [[51.505, -0.09], [51.51, -0.1], [51.515, -0.12]],
+                        color: "#22C55E",
                         weight: 5
                     },
-                    // Avoided Danger Zone (Red Dashed)
                     {
-                        positions: [
-                            [51.505, -0.09],
-                            [51.51, -0.08], // Risky detour
-                            [51.515, -0.12]
-                        ],
+                        positions: [[51.505, -0.09], [51.51, -0.08], [51.515, -0.12]],
                         color: "#FF4D4D",
                         dashArray: "10, 10",
                         weight: 3
@@ -68,35 +42,27 @@ const PublicSafeRoute = () => {
     };
 
     return (
-        <div className="min-h-screen pt-16 pb-8 px-6 lg:px-8">
-            <div className="max-w-7xl mx-auto">
-                {/* Header */}
-                <div className="text-center mb-5">
-                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                        Safe <span className="text-neon-teal">Route Finder</span>
-                    </h1>
-                    <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                        Find the safest path to your destination, avoiding high-risk areas.
-                    </p>
-                </div>
+        <div className="flex min-h-[calc(100vh-5rem)]">
+            <ToolsSidebar />
 
-
-
-                <div className="flex flex-col lg:flex-row gap-6 items-stretch">
+            {/* Page content */}
+            <div className="flex-1 min-w-0 px-6 lg:px-8 py-6">
+                {/* Route panel + map side by side */}
+                <div className="flex flex-col lg:flex-row gap-5 items-stretch">
                     {/* Route Panel */}
-                    <div className="w-full lg:w-96 glass-panel p-6 rounded-2xl border border-white/5 flex flex-col">
-                        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                    <div className="w-full lg:w-80 glass-panel p-6 rounded-2xl border border-white/5 flex flex-col">
+                        <h2 className="text-xl font-bold text-white mb-5 flex items-center gap-2">
                             <Navigation className="text-neon-teal" />
                             Route Details
                         </h2>
 
-                        <form onSubmit={handleSearch} className="space-y-4 mb-8">
+                        <form onSubmit={handleSearch} className="space-y-4 mb-6">
                             <Input
                                 label="Start Location"
                                 placeholder="Current Location"
                                 icon={MapPin}
                                 value={formData.start}
-                                onChange={(e) => updateForm({ start: e.target.value })}
+                                onChange={(e) => setFormData({ ...formData, start: e.target.value })}
                                 required
                             />
                             <Input
@@ -104,7 +70,7 @@ const PublicSafeRoute = () => {
                                 placeholder="Search destination..."
                                 icon={MapPin}
                                 value={formData.end}
-                                onChange={(e) => updateForm({ end: e.target.value })}
+                                onChange={(e) => setFormData({ ...formData, end: e.target.value })}
                                 required
                             />
                             <button
@@ -120,7 +86,7 @@ const PublicSafeRoute = () => {
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className="space-y-6"
+                                className="space-y-4"
                             >
                                 <div className="text-center p-4 bg-safe/10 rounded-xl border border-safe/20">
                                     <div className="text-safe font-bold text-lg mb-1 flex items-center justify-center gap-2">
@@ -128,8 +94,7 @@ const PublicSafeRoute = () => {
                                     </div>
                                     <div className="text-3xl font-bold text-white">{result.safetyScore}% <span className="text-sm font-normal text-gray-400">Safety Score</span></div>
                                 </div>
-
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-2 gap-3">
                                     <div className="bg-white/5 p-3 rounded-lg">
                                         <div className="text-gray-400 text-sm">Distance</div>
                                         <div className="text-white font-bold text-lg">{result.distance}</div>
@@ -139,12 +104,9 @@ const PublicSafeRoute = () => {
                                         <div className="text-white font-bold text-lg">{result.eta}</div>
                                     </div>
                                 </div>
-
                                 <div className="p-4 rounded-xl border border-warning/20 bg-warning/5">
                                     <div className="flex items-start gap-3">
-                                        <div className="shrink-0 text-warning mt-1">
-                                            <AlertTriangle size={18} />
-                                        </div>
+                                        <div className="shrink-0 text-warning mt-1"><AlertTriangle size={18} /></div>
                                         <div>
                                             <h4 className="text-warning font-bold text-sm">Route Advisory</h4>
                                             <p className="text-gray-400 text-sm mt-1">Avoided 2 high-risk zones near North Market. Route diverted via safe corridor.</p>
@@ -156,7 +118,7 @@ const PublicSafeRoute = () => {
                     </div>
 
                     {/* Map */}
-                    <div className="flex-1 glass-panel rounded-2xl overflow-hidden border border-white/5 min-h-[600px]">
+                    <div className="flex-1 glass-panel rounded-2xl overflow-hidden border border-white/5 min-h-[500px]">
                         <CrimeMap
                             polylines={result?.polylines}
                             markers={result?.markers || []}

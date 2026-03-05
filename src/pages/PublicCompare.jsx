@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { RefreshCw, MapPin, ArrowLeft } from 'lucide-react';
+import { RefreshCw, MapPin } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import Input from '../components/common/Input';
+import ToolsSidebar from '../components/common/ToolsSidebar';
 
 const PublicCompare = () => {
-    const navigate = useNavigate();
     const [areaA, setAreaA] = useState('');
     const [areaB, setAreaB] = useState('');
     const [comparing, setComparing] = useState(false);
@@ -20,35 +19,19 @@ const PublicCompare = () => {
 
     const handleCompare = () => {
         setComparing(true);
-        // Mock simulation
         setTimeout(() => setComparing(false), 1000);
     };
 
     return (
-        <div className="min-h-screen pt-16 pb-8 px-6 lg:px-8">
-            <div className="max-w-7xl mx-auto">
-                {/* Header */}
-                <div className="text-center mb-5">
-                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                        Compare <span className="text-neon-teal">Areas</span>
-                    </h1>
-                    <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                        Compare crime statistics between different areas to make informed decisions.
-                    </p>
-                </div>
+        <div className="flex min-h-[calc(100vh-5rem)]">
+            <ToolsSidebar />
 
-                {/* Back Button */}
-                <button
-                    onClick={() => navigate('/prediction')}
-                    className="mb-6 flex items-center gap-2 text-gray-400 hover:text-neon-teal transition-colors"
-                >
-                    <ArrowLeft size={20} />
-                    Back to Prediction
-                </button>
-
+            {/* Page content */}
+            <div className="flex-1 min-w-0 px-6 lg:px-8 py-6">
                 <div className="space-y-4">
+                    {/* Input row */}
                     <div className="glass-panel p-6 rounded-2xl border border-white/5">
-                        <h2 className="text-xl font-bold text-white mb-6">Area Comparison</h2>
+                        <h2 className="text-xl font-bold text-white mb-5">Area Comparison</h2>
                         <div className="flex flex-col md:flex-row gap-4 items-end">
                             <div className="flex-1 w-full">
                                 <Input
@@ -81,11 +64,12 @@ const PublicCompare = () => {
                         </div>
                     </div>
 
+                    {/* Results grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         {/* Risk Score Comparison */}
                         <div className="glass-panel p-6 rounded-2xl border border-white/5">
-                            <h3 className="text-lg font-semibold text-white mb-6">Overall Risk Score</h3>
-                            <div className="space-y-6">
+                            <h3 className="text-lg font-semibold text-white mb-5">Overall Risk Score</h3>
+                            <div className="space-y-5">
                                 <div>
                                     <div className="flex justify-between text-sm text-gray-400 mb-2">
                                         <span>{areaA || 'Area A'}</span>
@@ -117,8 +101,8 @@ const PublicCompare = () => {
 
                         {/* Crime Breakdown Chart */}
                         <div className="glass-panel p-6 rounded-2xl border border-white/5">
-                            <h3 className="text-lg font-semibold text-white mb-6">Crime Type Comparison</h3>
-                            <div className="h-[250px] w-full">
+                            <h3 className="text-lg font-semibold text-white mb-5">Crime Type Comparison</h3>
+                            <div className="h-[220px] w-full">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart data={data}>
                                         <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />

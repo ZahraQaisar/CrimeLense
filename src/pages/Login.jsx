@@ -18,19 +18,17 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        // Simulate API call
         setTimeout(() => {
-            // Mock user data
+            const isAdmin = formData.email.toLowerCase().includes('admin');
             const userData = {
                 name: formData.email.split('@')[0].charAt(0).toUpperCase() + formData.email.split('@')[0].slice(1),
                 email: formData.email,
-                displayPicture: null // No DP by default
+                role: isAdmin ? 'admin' : 'user',
+                displayPicture: null
             };
-
             login(userData);
             setLoading(false);
-            // Temporarily redirect to homepage for testing (instead of /dashboard)
-            navigate('/');
+            navigate(isAdmin ? '/admin' : '/');
         }, 1500);
     };
 
