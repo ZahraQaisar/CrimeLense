@@ -27,6 +27,18 @@ import AboutPage from './pages/About';
 import { DashboardHome } from './pages/AuthPlaceholders';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
+// New Feature Pages
+import CrimeRiskScore from './pages/CrimeRiskScore';
+import SafetyRanking from './pages/SafetyRanking';
+import TrendExplorer from './pages/TrendExplorer';
+import NeighborhoodSummary from './pages/NeighborhoodSummary';
+import AIInsights from './pages/AIInsights';
+import RiskForecast from './pages/RiskForecast';
+import NearbyScanner from './pages/NearbyScanner';
+import SafetyTips from './pages/SafetyTips';
+import CrimeTimeline from './pages/CrimeTimeline';
+import MapLayers from './pages/MapLayers';
+
 function App() {
     return (
         <Routes>
@@ -34,6 +46,7 @@ function App() {
             <Route element={<MainLayout />}>
                 <Route path="/" element={<LandingPage />} />
 
+                {/* Existing public features */}
                 <Route path="/prediction" element={<PublicPrediction />} />
                 <Route path="/safe-route" element={<PublicSafeRoute />} />
                 <Route path="/compare" element={<PublicCompare />} />
@@ -41,7 +54,20 @@ function App() {
                 <Route path="/selection" element={<AccessSelection />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
-                <Route path="/about" element={<AboutPage />} />
+
+                <Route path="/about" element={<div className="text-white p-10">About Page Placeholder</div>} />
+
+                {/* New User-Side Features */}
+                <Route path="/risk-score" element={<CrimeRiskScore />} />
+                <Route path="/safety-ranking" element={<SafetyRanking />} />
+                <Route path="/trend-explorer" element={<TrendExplorer />} />
+                <Route path="/neighborhood-summary" element={<NeighborhoodSummary />} />
+                <Route path="/ai-insights" element={<AIInsights />} />
+                <Route path="/risk-forecast" element={<RiskForecast />} />
+                <Route path="/nearby-scanner" element={<NearbyScanner />} />
+                <Route path="/safety-tips" element={<SafetyTips />} />
+                <Route path="/crime-timeline" element={<CrimeTimeline />} />
+                <Route path="/map-layers" element={<MapLayers />} /> 
             </Route>
 
             {/* Protected Dashboard Routes */}
