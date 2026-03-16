@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { Search, Filter, MoreVertical, UserCheck, UserX, Shield, User, Mail, Calendar, X, Save, AlertTriangle, Eye, EyeOff, Lock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -30,15 +31,24 @@ const selectStyle = {
 };
 
 // ── Modal Overlay wrapper ──────────────────────────────────────────────────
-const Overlay = ({ children, onClose }) => (
+const Overlay = ({ children, onClose }) => ReactDOM.createPortal(
   <motion.div
     initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-    className="fixed inset-0 flex items-center justify-center p-4"
-    style={{ background: 'rgba(0,0,0,0.88)', zIndex: 9999 }}
+    style={{
+      position: 'fixed',
+      inset: 0,
+      background: 'rgba(0,0,0,0.85)',
+      zIndex: 99999,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '1rem',
+    }}
     onClick={onClose}
   >
     {children}
-  </motion.div>
+  </motion.div>,
+  document.body
 );
 
 // ── Add / Edit User Modal ──────────────────────────────────────────────────
@@ -84,11 +94,12 @@ const UserModal = ({ open, onClose, onSave, editUser }) => {
   return (
     <AnimatePresence>
       <Overlay onClose={onClose}>
+        <style>{`.hide-scroll::-webkit-scrollbar { display: none; }`}</style>
         <motion.div
           initial={{ scale: 0.93, opacity: 0, y: 16 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.93, opacity: 0 }}
           transition={{ type: 'spring', stiffness: 320, damping: 28 }}
-          className="w-full max-w-md shadow-2xl overflow-hidden"
-          style={{ background: '#0f1923', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '16px' }}
+          className="w-full max-w-md shadow-2xl overflow-hidden hide-scroll"
+          style={{ background: '#0f1923', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '16px', maxHeight: '90vh', overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           onClick={e => e.stopPropagation()}
         >
           {/* Header */}
@@ -348,6 +359,13 @@ const UserManagement = () => {
   const [suspendTarget, setSuspendTarget]   = useState(null);
   const [deleteTarget, setDeleteTarget]     = useState(null);
   const [roleTarget, setRoleTarget]         = useState(null);
+
+  // Lock body scroll when any modal is open
+  React.useEffect(() => {
+    const anyOpen = userModalOpen || !!suspendTarget || !!deleteTarget || !!roleTarget;
+    document.body.style.overflow = anyOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [userModalOpen, suspendTarget, deleteTarget, roleTarget]);
 
   const filtered = users.filter(u =>
     (filter === 'All' || u.status === filter) &&

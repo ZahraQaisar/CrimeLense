@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import { Plus, Edit2, Trash2, MapPin, X, AlertTriangle, Save, Navigation, Search, Loader, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -70,19 +71,38 @@ const Modal = ({ open, onClose, onSave, initial }) => {
     onClose();
   };
 
-  return (
-    <AnimatePresence>
-      <motion.div
+  return ReactDOM.createPortal(
+    <motion.div
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-        className="fixed inset-0 flex items-center justify-center p-4"
-        style={{ background: 'rgba(0,0,0,0.88)', zIndex: 9999 }}
+        style={{ 
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(0,0,0,0.85)', 
+          zIndex: 99999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '1rem',
+        }}
         onClick={onClose}
       >
+        <style>{`.hs-modal::-webkit-scrollbar { display: none; }`}</style>
         <motion.div
           initial={{ scale: 0.93, opacity: 0, y: 16 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.93, opacity: 0 }}
           transition={{ type: 'spring', stiffness: 320, damping: 28 }}
-          className="w-full max-w-lg shadow-2xl overflow-hidden"
-          style={{ background: '#0f1923', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '16px' }}
+          className="hs-modal"
+          style={{ 
+            background: '#0f1923', 
+            border: '1px solid rgba(255,255,255,0.12)', 
+            borderRadius: '16px',
+            width: '100%',
+            maxWidth: '32rem',
+            maxHeight: '90vh',
+            overflowY: 'auto',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            boxShadow: '0 25px 60px rgba(0,0,0,0.8)',
+          }}
           onClick={e => e.stopPropagation()}
         >
           {/* Modal Header */}
@@ -264,19 +284,27 @@ const Modal = ({ open, onClose, onSave, initial }) => {
             </button>
           </div>
         </motion.div>
-      </motion.div>
-    </AnimatePresence>
+      </motion.div>,
+    document.body
   );
 };
 
 // ── Delete Confirm Modal ───────────────────────────────────────────────────
 const DeleteModal = ({ open, name, onConfirm, onClose }) => (
   <AnimatePresence>
-    {open && (
+    {open && ReactDOM.createPortal(
       <motion.div
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-        className="fixed inset-0 flex items-center justify-center p-4"
-        style={{ background: 'rgba(0,0,0,0.88)', zIndex: 9999 }}
+        style={{ 
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(0,0,0,0.85)',
+          zIndex: 99999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '1rem',
+        }}
         onClick={onClose}
       >
         <motion.div
@@ -303,7 +331,8 @@ const DeleteModal = ({ open, name, onConfirm, onClose }) => (
             </button>
           </div>
         </motion.div>
-      </motion.div>
+      </motion.div>,
+      document.body
     )}
   </AnimatePresence>
 );
@@ -465,6 +494,13 @@ const ManageHotspots = () => {
   const [selectedId, setSelectedId] = useState(null);
   const [pendingCoords, setPendingCoords] = useState(null);
 
+  // Lock body scroll when any modal is open
+  useEffect(() => {
+    const anyOpen = modalOpen || !!deleteTarget;
+    document.body.style.overflow = anyOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [modalOpen, deleteTarget]);
+
   const openAdd = () => { setEditTarget(null); setModalOpen(true); };
   const openEdit = (h) => { setEditTarget(h); setModalOpen(true); };
 
@@ -529,13 +565,13 @@ const ManageHotspots = () => {
 
       {/* Map */}
       <div className="glass-panel rounded-2xl border border-white/5 overflow-hidden">
-        <div className="flex items-center justify-between px-5 py-3 border-b border-white/5">
-          <div>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 px-5 py-3 border-b border-white/5">
+          <div className="flex-1 min-w-0">
             <h3 className="text-sm font-bold text-white">Crime Hotspot Map</h3>
             <p className="text-xs text-gray-500 mt-0.5">Click a marker to highlight · Click map to place new hotspot</p>
           </div>
           {/* Legend */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 flex-wrap">
             {Object.entries(RISK_COLORS).map(([label, color]) => (
               <div key={label} className="flex items-center gap-1.5">
                 <span className="w-3 h-3 rounded-full inline-block" style={{ background: color, boxShadow: `0 0 6px ${color}` }} />
@@ -585,7 +621,7 @@ const ManageHotspots = () => {
                     </div>
                   </td>
                   <td className="px-5 py-4">
-                    <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${RISK_STYLES[h.risk]}`}>
+                    <span className={`px-2.5 py-1 rounded-full text-xs font-bold border whitespace-nowrap inline-block ${RISK_STYLES[h.risk]}`}>
                       {h.risk} Risk
                     </span>
                   </td>
