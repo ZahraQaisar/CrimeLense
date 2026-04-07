@@ -1,59 +1,92 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Search, Radar, ShieldCheck, ChevronRight } from 'lucide-react';
+import { MapPin, Search, Radar, ShieldCheck, ChevronRight, Info, LogIn, ShieldAlert } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Input from '../components/common/Input';
+import { useAuth } from '../context/AuthContext';
 
 const riskLevels = {
-    Low: { dot: 'bg-safe', ring: 'ring-safe/30', text: 'text-safe', badge: 'bg-safe/10 border-safe/30', label: 'Low Risk' },
-    Moderate: { dot: 'bg-warning', ring: 'ring-warning/30', text: 'text-warning', badge: 'bg-warning/10 border-warning/30', label: 'Moderate' },
-    High: { dot: 'bg-danger', ring: 'ring-danger/30', text: 'text-danger', badge: 'bg-danger/10 border-danger/30', label: 'High Risk' },
+    Low: { dot: 'bg-safe', text: 'text-safe', badge: 'bg-safe/10 border-safe/30', label: 'Low Risk' },
+    Moderate: { dot: 'bg-warning', text: 'text-warning', badge: 'bg-warning/10 border-warning/30', label: 'Moderate' },
+    High: { dot: 'bg-danger', text: 'text-danger', badge: 'bg-danger/10 border-danger/30', label: 'High Risk' },
 };
 
+// Zone-level only (no street names / block detail)
 const mockNearby = {
     downtown: [
-        { name: 'Financial District', risk: 'High', density: 82, distance: '0.3km' },
-        { name: 'Old Market', risk: 'High', density: 75, distance: '0.6km' },
-        { name: 'Civic Center', risk: 'Moderate', density: 55, distance: '0.9km' },
-        { name: 'Arts Quarter', risk: 'Moderate', density: 48, distance: '1.1km' },
-        { name: 'Station Row', risk: 'Moderate', density: 51, distance: '1.4km' },
-        { name: 'Parkside', risk: 'Low', density: 19, distance: '1.7km' },
+        { zone: 'Central Business Zone', risk: 'High', distance: '0.5km' },
+        { zone: 'Market District', risk: 'Moderate', distance: '0.8km' },
+        { zone: 'Arts Quarter Zone', risk: 'Moderate', distance: '1.2km' },
+        { zone: 'Parkside Zone', risk: 'Low', distance: '1.6km' },
+        { zone: 'University Zone', risk: 'Low', distance: '2.0km' },
     ],
     northside: [
-        { name: 'Greenfield', risk: 'Low', density: 11, distance: '0.4km' },
-        { name: 'Lakewood', risk: 'Low', density: 15, distance: '0.7km' },
-        { name: 'Garden View', risk: 'Low', density: 20, distance: '1.0km' },
-        { name: 'Bell Avenue', risk: 'Moderate', density: 38, distance: '1.3km' },
-        { name: 'North Hub', risk: 'Moderate', density: 46, distance: '1.6km' },
-        { name: 'Crossroads', risk: 'High', density: 63, distance: '2.1km' },
+        { zone: 'Greenfield Zone', risk: 'Low', distance: '0.6km' },
+        { zone: 'Lakewood Zone', risk: 'Low', distance: '0.9km' },
+        { zone: 'Garden District', risk: 'Low', distance: '1.3km' },
+        { zone: 'North Hub Zone', risk: 'Moderate', distance: '1.7km' },
     ],
 };
 
 const defaultNearby = (base) => [
-    { name: `${base} North`, risk: 'Low', density: Math.floor(Math.random() * 20) + 5, distance: '0.3km' },
-    { name: `${base} East`, risk: 'Moderate', density: Math.floor(Math.random() * 25) + 35, distance: '0.7km' },
-    { name: `${base} South`, risk: 'High', density: Math.floor(Math.random() * 20) + 60, distance: '1.0km' },
-    { name: `${base} West`, risk: 'Low', density: Math.floor(Math.random() * 15) + 8, distance: '1.2km' },
-    { name: `${base} Central`, risk: 'Moderate', density: Math.floor(Math.random() * 20) + 40, distance: '1.5km' },
-    { name: `${base} Outer`, risk: 'Low', density: Math.floor(Math.random() * 10) + 5, distance: '2.0km' },
+    { zone: `${base} North Zone`, risk: 'Low', distance: '0.5km' },
+    { zone: `${base} East Zone`, risk: 'Moderate', distance: '0.9km' },
+    { zone: `${base} South Zone`, risk: 'High', distance: '1.2km' },
+    { zone: `${base} West Zone`, risk: 'Low', distance: '1.6km' },
+    { zone: `${base} Central Zone`, risk: 'Moderate', distance: '2.0km' },
 ];
 
-const suggestions = ['Downtown', 'Northside', 'Midtown'];
+const MAX_DAILY_SCANS = 5;
+const MAX_RADIUS_KM = 2;
+
+// Data delay date (30 days ago)
+const getDelayDate = () => {
+    const d = new Date();
+    d.setDate(d.getDate() - 30);
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+};
 
 export default function NearbyScanner() {
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
     const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(false);
     const [areas, setAreas] = useState(null);
     const [centerName, setCenterName] = useState('');
+    const scanCount = useRef(0);
+
+    // Login gate
+    if (!isAuthenticated) {
+        return (
+            <div className="min-h-screen flex items-center justify-center px-6">
+                <div className="glass-panel rounded-2xl border border-white/10 p-10 text-center max-w-md">
+                    <LogIn size={48} className="text-neon-teal mx-auto mb-4" />
+                    <h2 className="text-2xl font-bold text-white mb-2">Login Required</h2>
+                    <p className="text-gray-400 text-sm mb-6">The Nearby Risk Scanner requires authentication to access. Please log in to continue.</p>
+                    <button onClick={() => navigate('/login')}
+                        className="px-8 py-3 bg-neon-teal text-deep-navy font-bold rounded-xl shadow-[0_0_20px_rgba(20,241,217,0.3)] hover:shadow-[0_0_30px_rgba(20,241,217,0.5)] transition-all"
+                    >Log In</button>
+                </div>
+            </div>
+        );
+    }
+
+    const isLimitReached = scanCount.current >= MAX_DAILY_SCANS;
 
     const handleScan = (e) => {
         e.preventDefault();
         const q = query.trim();
-        if (!q) return;
+        if (!q || isLimitReached) return;
+
         setLoading(true);
+        scanCount.current += 1;
+
         setTimeout(() => {
             const key = q.toLowerCase().replace(/\s+/g, '');
-            const data = mockNearby[key] || defaultNearby(q);
-            setAreas(data);
+            // Filter results to max 2km radius
+            const raw = mockNearby[key] || defaultNearby(q);
+            const filtered = raw.filter(a => parseFloat(a.distance) <= MAX_RADIUS_KM);
+            setAreas(filtered);
             setCenterName(q);
             setLoading(false);
         }, 1300);
@@ -66,7 +99,7 @@ export default function NearbyScanner() {
     } : null;
 
     return (
-        <div className="min-h-screen pt-8 pb-12 px-6 lg:px-8">
+        <div className="min-h-screen pt-28 pb-12 px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-10">
@@ -77,16 +110,23 @@ export default function NearbyScanner() {
                         Nearby <span className="text-neon-teal">Risk Scanner</span>
                     </h1>
                     <p className="text-gray-400 max-w-xl mx-auto">
-                        Enter your location to scan nearby areas and see their individual risk levels.
+                        Enter your zone to scan nearby areas within {MAX_RADIUS_KM}km and see their risk levels.
                     </p>
                 </div>
 
+                {/* Info bar */}
+                <div className="flex flex-wrap items-center justify-center gap-4 mb-6 text-xs text-gray-500">
+                    <span className="bg-white/5 px-3 py-1.5 rounded-full">Max Radius: {MAX_RADIUS_KM}km</span>
+                    <span className="bg-white/5 px-3 py-1.5 rounded-full">Data as of: {getDelayDate()}</span>
+                    <span className="bg-white/5 px-3 py-1.5 rounded-full">Scans today: {scanCount.current} / {MAX_DAILY_SCANS}</span>
+                </div>
+
                 {/* Search */}
-                <form onSubmit={handleScan} className="flex gap-3 mb-8">
+                <form onSubmit={handleScan} className="flex gap-3 mb-4">
                     <div className="flex-1">
-                        <Input placeholder="Enter your area…" icon={MapPin} value={query} onChange={e => setQuery(e.target.value)} />
+                        <Input placeholder="Enter your zone…" icon={MapPin} value={query} onChange={e => setQuery(e.target.value)} />
                     </div>
-                    <button type="submit" disabled={loading}
+                    <button type="submit" disabled={loading || isLimitReached}
                         className="px-6 py-3 bg-neon-teal text-deep-navy font-bold rounded-xl shadow-[0_0_20px_rgba(20,241,217,0.3)] hover:shadow-[0_0_30px_rgba(20,241,217,0.5)] transition-all flex items-center gap-2 disabled:opacity-50"
                     >
                         {loading
@@ -97,9 +137,15 @@ export default function NearbyScanner() {
                     </button>
                 </form>
 
+                {isLimitReached && (
+                    <div className="flex items-center gap-2 p-3 rounded-lg bg-danger/10 border border-danger/30 text-danger text-sm mb-6 justify-center">
+                        <ShieldAlert size={16} /> Daily limit reached ({MAX_DAILY_SCANS} scans per day).
+                    </div>
+                )}
+
                 {/* Suggestions */}
                 <div className="flex flex-wrap gap-2 justify-center mb-8">
-                    {suggestions.map(s => (
+                    {['Downtown', 'Northside', 'Midtown'].map(s => (
                         <button key={s} onClick={() => setQuery(s)}
                             className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-neon-teal hover:border-neon-teal/30 transition-all text-xs flex items-center gap-1"
                         >
@@ -116,6 +162,7 @@ export default function NearbyScanner() {
                                 <div className="flex items-center gap-2">
                                     <MapPin size={16} className="text-neon-teal" />
                                     <span className="text-white font-semibold">Scanning from: <span className="text-neon-teal">{centerName}</span></span>
+                                    <span className="text-xs text-gray-600 ml-2">(within {MAX_RADIUS_KM}km)</span>
                                 </div>
                                 <div className="flex gap-4 ml-auto">
                                     <span className="flex items-center gap-1.5 text-sm text-safe"><span className="w-3 h-3 rounded-full bg-safe" /> {riskCounts.Low} Low</span>
@@ -124,58 +171,36 @@ export default function NearbyScanner() {
                                 </div>
                             </div>
 
-                            {/* Visual radar grid */}
-                            <div className="relative mb-8">
-                                {/* Fake radar rings */}
-                                <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-10 hidden md:flex">
-                                    <div className="w-96 h-96 rounded-full border border-neon-teal absolute" />
-                                    <div className="w-64 h-64 rounded-full border border-neon-teal absolute" />
-                                    <div className="w-32 h-32 rounded-full border border-neon-teal absolute" />
-                                </div>
-
-                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                                    {areas.map((area, i) => {
-                                        const cfg = riskLevels[area.risk];
-                                        return (
-                                            <motion.div key={area.name}
-                                                initial={{ opacity: 0, scale: 0.8 }}
-                                                animate={{ opacity: 1, scale: 1 }}
-                                                transition={{ delay: i * 0.07 }}
-                                                className={`glass-panel rounded-xl p-4 border ${cfg.badge} hover:scale-105 transition-transform duration-200`}
-                                            >
-                                                <div className="flex items-start justify-between mb-3">
-                                                    <div className={`flex items-center gap-2 px-2.5 py-1 rounded-full border text-xs font-bold ${cfg.badge} ${cfg.text}`}>
-                                                        <span className={`w-2 h-2 rounded-full ${cfg.dot} animate-pulse`} />
-                                                        {cfg.label}
-                                                    </div>
-                                                    <span className="text-xs text-gray-500">{area.distance}</span>
+                            {/* Zone cards */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                                {areas.map((area, i) => {
+                                    const cfg = riskLevels[area.risk];
+                                    return (
+                                        <motion.div key={area.zone}
+                                            initial={{ opacity: 0, scale: 0.8 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{ delay: i * 0.07 }}
+                                            className={`glass-panel rounded-xl p-4 border ${cfg.badge} hover:scale-105 transition-transform duration-200`}
+                                        >
+                                            <div className="flex items-start justify-between mb-3">
+                                                <div className={`flex items-center gap-2 px-2.5 py-1 rounded-full border text-xs font-bold ${cfg.badge} ${cfg.text}`}>
+                                                    <span className={`w-2 h-2 rounded-full ${cfg.dot} animate-pulse`} />
+                                                    {cfg.label}
                                                 </div>
-                                                <h4 className="text-white font-semibold mb-2">{area.name}</h4>
-                                                <div>
-                                                    <div className="flex justify-between text-xs text-gray-500 mb-1">
-                                                        <span>Crime Density</span>
-                                                        <span className={cfg.text}>{area.density}%</span>
-                                                    </div>
-                                                    <div className="w-full bg-white/10 rounded-full h-1.5 overflow-hidden">
-                                                        <motion.div
-                                                            initial={{ width: 0 }}
-                                                            animate={{ width: `${area.density}%` }}
-                                                            transition={{ duration: 0.7, delay: i * 0.07 + 0.3 }}
-                                                            className={`h-full rounded-full ${cfg.dot}`}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </motion.div>
-                                        );
-                                    })}
-                                </div>
+                                                <span className="text-xs text-gray-500">{area.distance}</span>
+                                            </div>
+                                            <h4 className="text-white font-semibold">{area.zone}</h4>
+                                        </motion.div>
+                                    );
+                                })}
                             </div>
 
-                            {/* Legend */}
-                            <div className="flex justify-center gap-6 text-sm">
-                                <span className="flex items-center gap-2 text-safe"><span className="w-3 h-3 rounded-full bg-safe" /> Low Risk</span>
-                                <span className="flex items-center gap-2 text-warning"><span className="w-3 h-3 rounded-full bg-warning" /> Moderate Risk</span>
-                                <span className="flex items-center gap-2 text-danger"><span className="w-3 h-3 rounded-full bg-danger" /> High Risk</span>
+                            {/* Disclaimers */}
+                            <div className="p-4 rounded-xl bg-neon-teal/5 border border-neon-teal/20 flex items-start gap-2 mb-4">
+                                <Info size={14} className="text-neon-teal shrink-0 mt-0.5" />
+                                <p className="text-gray-500 text-xs leading-relaxed">
+                                    This estimate is based on historical data and is for general awareness only. Do not use this for any unlawful purpose. Data shown has a minimum 30-day delay.
+                                </p>
                             </div>
                         </motion.div>
                     )}
@@ -185,13 +210,13 @@ export default function NearbyScanner() {
                             className="flex flex-col items-center justify-center py-16 text-gray-600"
                         >
                             <Radar size={52} className="mb-4 opacity-30 text-neon-teal" />
-                            <p>Enter your location to scan nearby risk levels</p>
+                            <p>Enter your zone to scan nearby risk levels</p>
                         </motion.div>
                     )}
                 </AnimatePresence>
 
                 <p className="text-center text-xs text-gray-600 mt-8 flex items-center justify-center gap-1">
-                    <ShieldCheck size={12} /> Risk zones based on aggregated historical crime density. No real-time tracking.
+                    <ShieldCheck size={12} /> Zone-level aggregated data only. No street-level or real-time tracking.
                 </p>
             </div>
         </div>

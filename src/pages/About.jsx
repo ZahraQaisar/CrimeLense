@@ -12,7 +12,7 @@ const AboutPage = () => {
     });
 
     return (
-        <div className="min-h-screen pt-16 pb-12 px-6 lg:px-8">
+        <div className="min-h-screen pt-28 pb-12 px-6 lg:px-8">
             <div className="max-w-5xl mx-auto">
 
                 {/* Hero */}
@@ -55,25 +55,25 @@ const AboutPage = () => {
                                 icon: Activity,
                                 title: 'Crime Risk Prediction',
                                 desc: 'AI-powered XGBoost model predicts crime likelihood for any area, date, and time with high confidence.',
-                                to: '/prediction'
+                                to: '/app/tools?tool=prediction'
                             },
                             {
                                 icon: Navigation,
                                 title: 'Safe Route Finder',
                                 desc: 'Calculates the safest travel path, dynamically avoiding known high-risk zones and hotspots.',
-                                to: '/safe-route'
+                                to: '/app/tools?tool=route'
                             },
                             {
                                 icon: BarChart3,
                                 title: 'Area Comparison',
                                 desc: 'Compare crime statistics between any two areas with interactive charts and risk scores.',
-                                to: '/compare'
+                                to: '/app/tools?tool=compare'
                             },
                             {
                                 icon: Shield,
                                 title: 'Live Crime Heatmap',
                                 desc: 'Visual density maps overlaying real-time incident reports across city zones.',
-                                to: '/prediction'
+                                to: '/app/live-map'
                             },
                         ].map(({ icon: Icon, title, desc, to }, i) => (
                             <motion.div key={i} {...fadeUp(0.1 + i * 0.05)}>
@@ -132,7 +132,7 @@ const AboutPage = () => {
                     <h2 className="text-2xl font-bold text-white mb-4">Ready to Explore?</h2>
                     <p className="text-gray-400 mb-6">Start by predicting crime risk in your area right now.</p>
                     <Link
-                        to="/prediction"
+                        to="/app/tools?tool=prediction"
                         className="inline-flex px-8 py-3.5 rounded-xl bg-neon-teal text-deep-navy font-bold hover:bg-white transition-all duration-300 shadow-[0_0_20px_rgba(20,241,217,0.4)] hover:shadow-[0_0_30px_rgba(20,241,217,0.6)]"
                     >
                         Try Crime Prediction →

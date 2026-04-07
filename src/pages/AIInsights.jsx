@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
     Lightbulb, Car, Moon, Building2, Bike, Users,
-    ShoppingBag, Clock, AlertTriangle, Star, ChevronDown
+    ShoppingBag, Clock, AlertTriangle, Star, ChevronDown, Info, ShieldCheck
 } from 'lucide-react';
 
 const allInsights = [
@@ -10,56 +10,56 @@ const allInsights = [
         id: 1, icon: Moon, color: '#6366F1',
         category: 'Robbery',
         confidence: 91,
-        insight: 'Robbery incidents spike significantly during late-night hours (10PM–2AM) in densely populated commercial zones.',
-        tags: ['Night Hours', 'Commercial'],
+        insight: 'Robbery incidents tend to increase during late-night hours citywide, particularly in commercial zones across the city.',
+        tags: ['Citywide', 'Late Night'],
     },
     {
         id: 2, icon: Car, color: '#F59E0B',
         category: 'Vehicle Theft',
         confidence: 87,
-        insight: 'Vehicle theft is 2.4× more likely near unmonitored parking zones compared to monitored areas.',
-        tags: ['Parking Zones', 'Weekends'],
+        insight: 'Vehicle theft risk is significantly higher in areas lacking CCTV coverage compared to monitored parking zones.',
+        tags: ['Infrastructure', 'Prevention'],
     },
     {
         id: 3, icon: ShoppingBag, color: '#14F1D9',
         category: 'Pickpocketing',
         confidence: 85,
-        insight: 'Pickpocketing incidents are concentrated around busy transit hubs and crowded shopping areas during peak hours.',
-        tags: ['Transit Hubs', 'Crowds'],
+        insight: 'Pickpocketing incidents are concentrated around high-footfall areas across the city, especially during peak crowd hours.',
+        tags: ['Crowds', 'Awareness'],
     },
     {
         id: 4, icon: Building2, color: '#FF4D4D',
         category: 'Burglary',
         confidence: 82,
-        insight: 'Residential burglaries peak between 1PM–4PM on weekdays — when homes are typically unoccupied.',
+        insight: 'Residential burglaries tend to peak during daytime hours on weekdays, when properties are typically unoccupied.',
         tags: ['Residential', 'Daytime'],
     },
     {
         id: 5, icon: Bike, color: '#EC4899',
         category: 'Bike Theft',
         confidence: 79,
-        insight: 'Bicycle theft follows seasonal patterns — incidents increase by 60% during summer months.',
+        insight: 'Bicycle theft follows seasonal patterns — incidents increase significantly during warmer months citywide.',
         tags: ['Seasonal', 'Outdoor'],
     },
     {
         id: 6, icon: Users, color: '#22D3EE',
         category: 'Assault',
         confidence: 88,
-        insight: 'Assault incidents are 3× higher on Friday and Saturday nights, particularly near entertainment districts.',
-        tags: ['Weekends', 'Night', 'Entertainment'],
+        insight: 'Assault incidents show a strong weekend pattern, with cases rising significantly on Friday and Saturday evenings.',
+        tags: ['Weekends', 'Evening'],
     },
     {
         id: 7, icon: Clock, color: '#A78BFA',
         category: 'Street Theft',
         confidence: 76,
-        insight: 'Street theft follows a "rush-hour" pattern — incidents peak between 7–9AM and 5–7PM.',
-        tags: ['Rush Hour', 'Streets'],
+        insight: 'Street theft incidents tend to cluster around commuting hours — with peaks during morning and evening rush periods.',
+        tags: ['Rush Hour', 'Commuting'],
     },
     {
         id: 8, icon: AlertTriangle, color: '#F97316',
         category: 'Vandalism',
         confidence: 72,
-        insight: 'Vandalism reports drop by 45% in areas with active CCTV coverage compared to unmonitored zones.',
+        insight: 'Areas with active surveillance infrastructure report significantly fewer vandalism incidents compared to unmonitored zones.',
         tags: ['Infrastructure', 'Prevention'],
     },
 ];
@@ -73,7 +73,7 @@ export default function AIInsights() {
     const filtered = filter === 'All' ? allInsights : allInsights.filter(i => i.category === filter);
 
     return (
-        <div className="min-h-screen pt-8 pb-12 px-6 lg:px-8">
+        <div className="min-h-screen pt-28 pb-12 px-6 lg:px-8">
             <div className="max-w-5xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-10">
@@ -95,8 +95,8 @@ export default function AIInsights() {
                             key={cat}
                             onClick={() => setFilter(cat)}
                             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border ${filter === cat
-                                    ? 'bg-neon-teal text-deep-navy border-neon-teal font-bold'
-                                    : 'bg-white/5 text-gray-400 border-white/10 hover:text-white hover:border-white/20'
+                                ? 'bg-neon-teal text-deep-navy border-neon-teal font-bold'
+                                : 'bg-white/5 text-gray-400 border-white/10 hover:text-white hover:border-white/20'
                                 }`}
                         >
                             {cat}
@@ -173,8 +173,16 @@ export default function AIInsights() {
                     </div>
                 )}
 
-                <p className="text-center text-xs text-gray-600 mt-10 flex items-center justify-center gap-1">
-                    <Lightbulb size={12} /> Insights generated from anonymized historical crime pattern analysis.
+                {/* Disclaimer */}
+                <div className="p-4 rounded-xl bg-neon-teal/5 border border-neon-teal/20 flex items-start gap-2 mt-8">
+                    <Info size={14} className="text-neon-teal shrink-0 mt-0.5" />
+                    <p className="text-gray-500 text-xs leading-relaxed">
+                        This estimate is based on historical data and is for general awareness only. Do not use this for any unlawful purpose.
+                    </p>
+                </div>
+
+                <p className="text-center text-xs text-gray-600 mt-4 flex items-center justify-center gap-1">
+                    <ShieldCheck size={12} /> Insights generated from anonymized historical crime pattern analysis. No specific locations identified.
                 </p>
             </div>
         </div>

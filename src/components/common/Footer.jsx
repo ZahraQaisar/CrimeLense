@@ -32,18 +32,15 @@ const Footer = () => {
                         <h4 className="text-white font-bold mb-6 uppercase tracking-wider text-xs">Platform</h4>
                         <ul className="space-y-3">
                             <li><Link to="/" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Home</Link></li>
-                            <li><Link to="/prediction" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Risk Prediction</Link></li>
-                            <li><Link to="/safe-route" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Safe Route</Link></li>
-                            <li><Link to="/compare" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Compare Areas</Link></li>
+                            <li><Link to="/app/tools?tool=prediction" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Risk Prediction</Link></li>
+                            <li><Link to="/app/tools?tool=route" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Safe Route</Link></li>
+                            <li><Link to="/app/tools?tool=compare" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Compare Areas</Link></li>
                             <li><Link to="/risk-score" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Risk Score</Link></li>
-                            <li><Link to="/safety-ranking" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Safety Ranking</Link></li>
                             <li><Link to="/trend-explorer" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Trend Explorer</Link></li>
                             <li><Link to="/ai-insights" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">AI Insights</Link></li>
-                            <li><Link to="/risk-forecast" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Risk Forecast</Link></li>
                             <li><Link to="/nearby-scanner" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Nearby Scanner</Link></li>
                             <li><Link to="/safety-tips" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Safety Tips</Link></li>
                             <li><Link to="/crime-timeline" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Crime Timeline</Link></li>
-                            <li><Link to="/map-layers" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Map Layers</Link></li>
                         </ul>
                     </div>
 

@@ -24,7 +24,7 @@ const PublicHeatmap = () => {
     ];
 
     return (
-        <div className="min-h-screen pt-20 pb-12 px-6 lg:px-8">
+        <div className="min-h-screen pt-28 pb-12 px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-8">
