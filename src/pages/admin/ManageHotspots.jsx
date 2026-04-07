@@ -289,24 +289,32 @@ const Modal = ({ open, onClose, onSave, initial }) => {
   );
 };
 
+// ── Modal Overlay wrapper ──────────────────────────────────────────────────
+const Overlay = ({ children, onClose }) => ReactDOM.createPortal(
+  <motion.div
+    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+    style={{
+      position: 'fixed',
+      inset: 0,
+      background: 'rgba(0,0,0,0.85)',
+      zIndex: 99999,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '1rem',
+    }}
+    onClick={onClose}
+  >
+    {children}
+  </motion.div>,
+  document.body
+);
+
 // ── Delete Confirm Modal ───────────────────────────────────────────────────
 const DeleteModal = ({ open, name, onConfirm, onClose }) => (
   <AnimatePresence>
-    {open && ReactDOM.createPortal(
-      <motion.div
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-        style={{ 
-          position: 'fixed',
-          inset: 0,
-          background: 'rgba(0,0,0,0.85)',
-          zIndex: 99999,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '1rem',
-        }}
-        onClick={onClose}
-      >
+    {open && (
+      <Overlay onClose={onClose}>
         <motion.div
           initial={{ scale: 0.93, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.93, opacity: 0 }}
           className="w-full max-w-sm shadow-2xl p-6"
@@ -331,8 +339,7 @@ const DeleteModal = ({ open, name, onConfirm, onClose }) => (
             </button>
           </div>
         </motion.div>
-      </motion.div>,
-      document.body
+      </Overlay>
     )}
   </AnimatePresence>
 );
