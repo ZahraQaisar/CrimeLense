@@ -1,5 +1,5 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import AppShell from './layouts/AppShell';
 import DashboardLayout from './layouts/DashboardLayout';
@@ -11,7 +11,6 @@ import LandingPage from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
-import AccessSelection from './pages/AccessSelection';
 import AboutPage from './pages/About';
 import PublicHeatmap from './pages/PublicHeatmap';
 import CrimeRiskScore from './pages/CrimeRiskScore';
@@ -47,11 +46,32 @@ import UserManagement from './pages/admin/UserManagement';
 import IncidentLogs from './pages/admin/IncidentLogs';
 import SystemSettings from './pages/admin/SystemSettings';
 
+function ScrollToTop() {
+    const { pathname, hash } = useLocation();
+
+    useEffect(() => {
+        if (hash) {
+            const element = document.getElementById(hash.substring(1));
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                window.scrollTo(0, 0);
+            }
+        } else {
+            window.scrollTo(0, 0);
+        }
+    }, [pathname, hash]);
+
+    return null;
+}
+
 function App() {
     return (
-        <Routes>
-            {/* ── New App Shell (user-facing SaaS dashboard) ───────────── */}
-            <Route path="/app" element={<AppShell />}>
+        <>
+            <ScrollToTop />
+            <Routes>
+                {/* ── New App Shell (user-facing SaaS dashboard) ───────────── */}
+            <Route path="/app" element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
                 <Route index element={<Navigate to="/app/dashboard" replace />} />
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="tools" element={<Tools />} />
@@ -65,7 +85,6 @@ function App() {
             <Route element={<MainLayout />}>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/selection" element={<AccessSelection />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/about" element={<AboutPage />} />
@@ -78,6 +97,8 @@ function App() {
                 <Route path="/nearby-scanner" element={<NearbyScanner />} />
                 <Route path="/awareness" element={<AwarenessHub />} />
                 <Route path="/crime-timeline" element={<CrimeTimeline />} />
+                <Route path="/safety-quiz" element={<SafetyQuiz />} />
+                <Route path="/my-routes" element={<MyRoutes />} />
                 {/* Redirects */}
                 <Route path="/risk-forecast" element={<Navigate to="/" replace />} />
                 <Route path="/safety-ranking" element={<Navigate to="/" replace />} />
@@ -100,7 +121,7 @@ function App() {
 
             {/* ── Admin ────────────────────────────────────────────────── */}
             <Route path="/admin" element={
-                <ProtectedRoute><AdminLayout /></ProtectedRoute>
+                <ProtectedRoute requireAdmin={true}><AdminLayout /></ProtectedRoute>
             }>
                 <Route index element={<AdminOverview />} />
                 <Route path="hotspots" element={<ManageHotspots />} />
@@ -108,7 +129,8 @@ function App() {
                 <Route path="logs" element={<IncidentLogs />} />
                 <Route path="settings" element={<SystemSettings />} />
             </Route>
-        </Routes>
+            </Routes>
+        </>
     );
 }
 

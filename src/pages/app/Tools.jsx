@@ -34,7 +34,15 @@ const CrimePredictionPanel = () => {
   const [time, setTime] = useState('any');
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
-  const zoneChips = ['Downtown', 'Midtown', 'Northside', 'Eastgate', 'Riverside', 'Westbrook'];
+  const [allZones, setAllZones] = useState(['Downtown', 'Midtown', 'Northside', 'Eastgate', 'Riverside', 'Westbrook']);
+
+  const handleAddZone = () => {
+    if (!zone.trim()) return;
+    const newZone = zone.trim();
+    if (!allZones.includes(newZone)) {
+      setAllZones([...allZones, newZone]);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,9 +68,20 @@ const CrimePredictionPanel = () => {
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <div>
             <label style={labelStyle}>Zone / District</label>
-            <input value={zone} onChange={e => setZone(e.target.value)} placeholder="e.g. Downtown" style={inputStyle()}
-              onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--border-default)'} />
-            <div className="mt-2"><ChipGroup chips={zoneChips} selected={zone} onSelect={setZone} /></div>
+            <div className="flex gap-2">
+              <input value={zone} onChange={e => setZone(e.target.value)} placeholder="Search or add custom area..." style={{ ...inputStyle(), flex: 1 }}
+                onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--border-default)'} 
+                onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleAddZone(); } }} />
+              <button 
+                 type="button"
+                 onClick={handleAddZone} 
+                 className="px-4 rounded-lg text-sm font-bold bg-white/5 border border-white/10 hover:bg-white/10 transition-colors shrink-0"
+                 style={{ color: 'var(--text-primary)' }}
+              >
+                 Add
+              </button>
+            </div>
+            <div className="mt-3"><ChipGroup chips={allZones} selected={zone} onSelect={setZone} /></div>
           </div>
           <div>
             <label style={labelStyle}>Date</label>

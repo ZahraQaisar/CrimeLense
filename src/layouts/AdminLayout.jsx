@@ -3,6 +3,7 @@ import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Map, Users, Settings, LogOut, ShieldAlert, Menu, X, GripVertical } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { useAuth } from '../context/AuthContext';
+import PageTransition from '../components/common/PageTransition';
 
 const MIN_WIDTH = 60;      // fully collapsed (icons only)
 const MAX_WIDTH = 400;
@@ -241,8 +242,10 @@ const AdminLayout = () => {
                         </div>
 
                         {/* Page Content */}
-                        <main className="flex-1 p-4 sm:p-6 lg:p-8">
-                            <Outlet />
+                        <main className="flex-1 flex flex-col p-4 sm:p-6 lg:p-8">
+                            <PageTransition>
+                                <Outlet />
+                            </PageTransition>
                         </main>
                     </div>
                 </div>

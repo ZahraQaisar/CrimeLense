@@ -69,6 +69,7 @@ const LandingPage = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     overflow: 'hidden',
+                    paddingTop: '70px', // Prevents content from overflowing into fixed navbar on mobile
                 }}
             >
                 <HeroCanvas />
@@ -96,6 +97,7 @@ const LandingPage = () => {
 
                 {/* Hero text */}
                 <motion.div
+                    className="mt-[100px] md:mt-0"
                     style={{ position: 'relative', zIndex: 3, textAlign: 'center', padding: '0 24px', maxWidth: 800 }}
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -142,7 +144,7 @@ const LandingPage = () => {
                         <Link
                             to="/app/dashboard"
                             className="px-8 py-4 rounded-xl bg-neon-teal text-deep-navy font-bold text-lg hover:bg-white transition-all duration-300"
-                            style={{ boxShadow: '0 0 24px rgba(0,212,170,0.45)' }}
+                            style={{ boxShadow: '0 0 10px rgba(0,212,170,0.15)' }}
                         >
                             Get Started Now
                         </Link>
@@ -267,6 +269,7 @@ const LandingPage = () => {
 
             {/* ═══════════ FEATURES GRID ═══════════ */}
             <section
+                id="features"
                 className="py-24 px-6 lg:px-8 max-w-7xl mx-auto z-10"
                 style={{ position: 'relative' }}
             >
@@ -288,14 +291,15 @@ const LandingPage = () => {
                     viewport={{ once: true, amount: 0.2 }}
                 >
                     {[
-                        { icon: Map, title: 'Heatmap Visualization', desc: 'Interactive crime density maps identifying high-risk zones and safe havens.' },
-                        { icon: Shield, title: 'Safe Routing', desc: 'AI-calculated navigation paths avoiding danger hotspots in real-time.' },
-                        { icon: Activity, title: 'Predictive Analytics', desc: 'Machine learning models forecasting potential risks based on historical data.' },
+                        { icon: Map, title: 'Heatmap Visualization', desc: 'Interactive crime density maps identifying high-risk zones and safe havens.', link: '/app/live-map' },
+                        { icon: Shield, title: 'Safe Routing', desc: 'AI-calculated navigation paths avoiding danger hotspots in real-time.', link: '/app/tools?tool=route' },
+                        { icon: Activity, title: 'Predictive Analytics', desc: 'Machine learning models forecasting potential risks based on historical data.', link: '/app/tools?tool=prediction' },
                     ].map((feature, idx) => (
                         <motion.div
                             key={idx}
                             variants={fadeUp}
-                            className="p-8 rounded-2xl glass-panel border border-white/5 hover:border-neon-teal/30 transition-all duration-500 group relative overflow-hidden"
+                            onClick={() => navigate(feature.link)}
+                            className="p-8 rounded-2xl glass-panel border border-white/5 hover:border-neon-teal/30 transition-all duration-500 group relative overflow-hidden cursor-pointer"
                             whileHover={{ y: -6, boxShadow: '0 20px 60px rgba(0,212,170,0.12)' }}
                         >
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-teal to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -319,17 +323,18 @@ const LandingPage = () => {
                     viewport={{ once: true, amount: 0.1 }}
                 >
                     {[
-                        { icon: Brain, title: 'Crime Risk Prediction', desc: 'Predicts potential crime probability based on historical patterns and temporal data.' },
-                        { icon: Layout, title: 'Hotspot Identification', desc: 'Detect statistically significant high-risk zones using advanced spatial clustering.' },
-                        { icon: BarChart, title: 'Trend Analysis', desc: 'Analyze crime patterns by time of day, day of week, and seasonal fluctuations.' },
-                        { icon: Users, title: 'Authority Dashboard', desc: 'Specialized analytics for law enforcement and city planners to monitor risks.' },
-                        { icon: Globe, title: 'Urban Dynamics', desc: 'Understanding how city growth and infrastructure changes impact local safety.' },
-                        { icon: Search, title: 'Granular Reports', desc: 'Deep dive into specific incident types and their impact on neighborhood safety scores.' },
+                        { icon: Brain, title: 'Crime Risk Prediction', desc: 'Predicts potential crime probability based on historical patterns and temporal data.', link: '/app/tools?tool=prediction' },
+                        { icon: Layout, title: 'Hotspot Identification', desc: 'Detect statistically significant high-risk zones using advanced spatial clustering.', link: '/trend-explorer' },
+                        { icon: BarChart, title: 'Trend Analysis', desc: 'Analyze crime patterns by time of day, day of week, and seasonal fluctuations.', link: '/trend-explorer' },
+                        { icon: Users, title: 'Authority Dashboard', desc: 'Specialized analytics for law enforcement and city planners to monitor risks.', link: '/login' },
+                        { icon: Globe, title: 'Urban Dynamics', desc: 'Understanding how city growth and infrastructure changes impact local safety.', link: '/neighborhood-summary' },
+                        { icon: Search, title: 'Granular Reports', desc: 'Deep dive into specific incident types and their impact on neighborhood safety scores.', link: '/crime-timeline' },
                     ].map((feature, idx) => (
                         <motion.div
                             key={idx}
                             variants={fadeUp}
-                            className="p-8 rounded-2xl bg-white/2 border border-white/5 hover:bg-white/5 hover:border-neon-teal/20 transition-all duration-300 flex flex-col items-start"
+                            onClick={() => navigate(feature.link)}
+                            className="p-8 rounded-2xl bg-white/2 border border-white/5 hover:bg-white/5 hover:border-neon-teal/20 transition-all duration-300 flex flex-col items-start cursor-pointer"
                             whileHover={{ y: -4 }}
                         >
                             <div className="text-neon-teal/70 mb-4"><feature.icon size={24} /></div>
@@ -342,6 +347,7 @@ const LandingPage = () => {
 
             {/* ═══════════ HOW IT WORKS ═══════════ */}
             <section
+                id="how-it-works"
                 className="py-24 px-6 lg:px-8 max-w-7xl mx-auto z-10"
                 style={{ position: 'relative' }}
             >

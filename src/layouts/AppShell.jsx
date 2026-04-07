@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import NavBar from '../components/shell/NavBar';
 import Sidebar from '../components/shell/Sidebar';
 import GlobalBackground from '../components/common/GlobalBackground';
+import PageTransition from '../components/common/PageTransition';
 
 const AppShell = () => {
   const location = useLocation();
@@ -12,16 +13,7 @@ const AppShell = () => {
       <GlobalBackground />
       <NavBar />
       <Sidebar />
-      <main
-        style={{
-          marginTop: 60,
-          marginLeft: 240,
-          minHeight: 'calc(100vh - 60px)',
-          padding: '28px 32px',
-          background: 'var(--bg)',
-          overflowY: 'auto',
-        }}
-      >
+      <main className="mt-[60px] md:ml-[240px] p-4 sm:p-6 md:p-8 min-h-[calc(100vh-60px)] flex flex-col overflow-x-hidden" style={{ background: 'var(--bg)', zIndex: 10 }}>
         <div
           key={location.pathname + location.search}
           style={{ animation: 'fadeIn 150ms ease forwards' }}

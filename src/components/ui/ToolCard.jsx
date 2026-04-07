@@ -1,51 +1,46 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
-const ToolCard = ({ icon: Icon, name, description, path, color = 'var(--accent)' }) => {
+const ToolCard = ({ icon: Icon, name, description, path, color, delay }) => {
   const navigate = useNavigate();
 
   return (
-    <button
+    <motion.button
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay, duration: 0.4, ease: 'easeOut' }}
+      whileHover={{ y: -4, scale: 1.02 }}
       onClick={() => navigate(path)}
-      className="text-left rounded-xl p-5 flex flex-col gap-4 group w-full"
-      style={{
-        background: 'var(--surface)',
-        border: '1px solid var(--border-subtle)',
-        transition: 'transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease',
-      }}
-      onMouseEnter={e => {
-        e.currentTarget.style.transform = 'translateY(-1px)';
-        e.currentTarget.style.borderColor = 'var(--border-default)';
-        e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.15)';
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.borderColor = 'var(--border-subtle)';
-        e.currentTarget.style.boxShadow = 'none';
-      }}
+      className="relative text-left rounded-[20px] p-6 flex flex-col gap-5 group w-full overflow-hidden bg-[#111928]/80 backdrop-blur-md border border-white/5"
     >
+        {/* Glow effect */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+            <div className={`absolute -inset-10 opacity-30 blur-2xl rounded-full transition-colors`} style={{ backgroundColor: color }} />
+        </div>
+
       <div
-        className="flex items-center justify-center rounded-xl"
-        style={{ width: 44, height: 44, background: 'rgba(38, 204, 194, 0.08)', border: '1px solid rgba(38, 204, 194, 0.3)' }}
+        className="flex items-center justify-center rounded-2xl w-14 h-14 relative z-10 transition-colors duration-300"
+        style={{ backgroundColor: `${color}1A`, border: `1px solid ${color}33`, color: color }}
       >
-        <Icon size={20} color="#26CCC2" strokeWidth={2} />
+        <Icon size={26} strokeWidth={1.5} />
       </div>
-      <div className="flex-1">
-        <h3 className="text-sm font-semibold mb-1" style={{ fontFamily: "'Space Grotesk', sans-serif", color: 'var(--text-primary)' }}>
+      <div className="flex-1 relative z-10">
+        <h3 className="text-lg font-bold mb-2 text-white group-hover:text-white transition-colors">
           {name}
         </h3>
-        <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-sm leading-relaxed text-gray-400 group-hover:text-gray-300 transition-colors line-clamp-2">
           {description}
         </p>
       </div>
       <div
-        className="flex items-center gap-1.5 text-xs font-medium transition-all duration-150 opacity-0 group-hover:opacity-100"
-        style={{ color: 'var(--accent)' }}
+        className="flex items-center gap-1.5 text-xs font-bold transition-all duration-300 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 relative z-10 uppercase tracking-widest mt-1"
+        style={{ color: color }}
       >
-        Open tool <ArrowRight size={12} />
+        Launch Tool <ArrowRight size={14} />
       </div>
-    </button>
+    </motion.button>
   );
 };
 

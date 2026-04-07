@@ -16,13 +16,13 @@ const Footer = () => {
                             AI-powered urban safety intelligence. We are dedicated to making cities safer through data-driven predictive analysis and smart navigation.
                         </p>
                         <div className="flex gap-4">
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-teal hover:bg-white/10 transition-all">
+                            <a href="https://twitter.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-teal hover:-translate-y-1 hover:bg-white/10 transition-all">
                                 <Twitter size={20} />
                             </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-teal hover:bg-white/10 transition-all">
+                            <a href="https://github.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-teal hover:-translate-y-1 hover:bg-white/10 transition-all">
                                 <Github size={20} />
                             </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-teal hover:bg-white/10 transition-all">
+                            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-neon-teal hover:-translate-y-1 hover:bg-white/10 transition-all">
                                 <Linkedin size={20} />
                             </a>
                         </div>
@@ -47,10 +47,10 @@ const Footer = () => {
                     <div>
                         <h4 className="text-white font-bold mb-6 uppercase tracking-wider text-xs">Resources</h4>
                         <ul className="space-y-4">
-                            <li><a href="#" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Documentation</a></li>
-                            <li><a href="#" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Research Papers</a></li>
-                            <li><a href="#" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">API Access</a></li>
-                            <li><a href="#" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Privacy Policy</a></li>
+                            <li><Link to="/app/help" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Documentation</Link></li>
+                            <li><Link to="/about" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Research Papers</Link></li>
+                            <li><Link to="/app/settings" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">API Access</Link></li>
+                            <li><Link to="/about" className="text-gray-500 hover:text-neon-teal transition-colors text-sm">Privacy Policy</Link></li>
                         </ul>
                     </div>
 
@@ -71,9 +71,9 @@ const Footer = () => {
                 <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-600 text-[10px] sm:text-xs">
                     <p>© {new Date().getFullYear()} CrimeLense AI. Built for urban safety. All rights reserved.</p>
                     <div className="flex gap-8">
-                        <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-                        <a href="#" className="hover:text-white transition-colors">Security</a>
-                        <a href="#" className="hover:text-white transition-colors">Status</a>
+                        <Link to="/about" className="hover:text-neon-teal transition-colors cursor-pointer">Terms of Service</Link>
+                        <Link to="/about" className="hover:text-neon-teal transition-colors cursor-pointer">Security</Link>
+                        <Link to="/app/dashboard" className="hover:text-neon-teal transition-colors cursor-pointer">Status</Link>
                     </div>
                 </div>
             </div>
