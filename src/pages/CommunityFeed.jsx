@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, AlertCircle, Clock, MapPin, Plus, Send, CheckCircle2, ChevronDown, Flag } from 'lucide-react';
+import { Users, AlertCircle, Clock, MapPin, Plus, Send, CheckCircle2, ChevronDown, Flag, X } from 'lucide-react';
 import Input from '../components/common/Input';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';

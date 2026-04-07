@@ -88,7 +88,7 @@ const Sidebar = () => {
 
   return (
     <aside
-      className="fixed left-0 flex flex-col"
+      className="hidden md:flex fixed left-0 flex-col z-40"
       style={{
         top: 60,
         bottom: 0,

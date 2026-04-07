@@ -83,11 +83,11 @@ const Navbar = () => {
             ? 'bg-deep-navy/85 backdrop-blur-xl border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]'
             : 'bg-transparent backdrop-blur-none border-transparent'
             }`}>
-            <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                <div className="grid grid-cols-3 items-center h-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex justify-between md:grid md:grid-cols-3 items-center h-20">
                     {/* Logo — left */}
                     <Link to="/" className="flex items-center gap-2 group w-fit">
-                        <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-neon-teal/10 to-blue-600/10 shadow-[0_0_20px_rgba(20,241,217,0.2)] group-hover:shadow-[0_0_30px_rgba(20,241,217,0.4)] transition-all duration-300 border border-neon-teal/20">
+                        <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-neon-teal/10 to-blue-600/10 shadow-[0_0_10px_rgba(20,241,217,0.1)] group-hover:shadow-[0_0_15px_rgba(20,241,217,0.2)] transition-all duration-300 border border-neon-teal/20">
                             <svg viewBox="0 0 100 100" className="w-full h-full p-2" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 {/* Outer dynamic iris segments */}
                                 <path d="M 50 10 A 40 40 0 0 1 90 50" stroke="currentColor" strokeWidth="10" strokeLinecap="round" className="text-neon-teal" />
@@ -105,14 +105,14 @@ const Navbar = () => {
                     {/* Desktop Nav — truly centered */}
                     <div className="hidden md:flex items-center justify-center gap-8">
                         {navLinks.map((link) => (
-                            <a
+                            <Link
                                 key={link.name}
-                                href={link.path}
+                                to={link.path}
                                 className="text-sm font-medium text-gray-300 hover:text-neon-teal transition-colors relative group"
                             >
                                 {link.name}
                                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-neon-teal transition-all duration-300 group-hover:w-full" />
-                            </a>
+                            </Link>
                         ))}
 
                         {/* Explore Dropdown */}
@@ -277,14 +277,14 @@ const Navbar = () => {
                     >
                         <div className="px-6 py-8 flex flex-col gap-5">
                             {navLinks.map((link) => (
-                                <a
+                                <Link
                                     key={link.name}
-                                    href={link.path}
+                                    to={link.path}
                                     onClick={() => setIsOpen(false)}
                                     className="text-lg font-medium text-gray-300 hover:text-neon-teal transition-colors"
                                 >
                                     {link.name}
-                                </a>
+                                </Link>
                             ))}
 
                             {/* Mobile Explore */}
