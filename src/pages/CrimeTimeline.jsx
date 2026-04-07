@@ -1,8 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, Play, Pause, ShieldCheck } from 'lucide-react';
+import { Clock, Play, Pause, ShieldCheck, LogIn, Info } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
+// Monthly data only — no weekly/daily/hourly granularity
+// Current month removed (30-day minimum delay)
 const yearlyData = {
     2019: [
         { month: 'Jan', Theft: 38, Assault: 15, Burglary: 20, Vandalism: 14 },
@@ -51,12 +55,30 @@ const yearFacts = {
     2021: 'Gradual recovery. Crime activity resumed as restrictions eased.',
     2022: 'Notable rise in street theft as urban activity normalized.',
     2023: 'Highest overall numbers in 5 years. Summer months most critical.',
-    2024: 'Data through Q4. Trends suggest slight reduction from 2023 peak.',
+    2024: 'Data through Q3. Trends suggest slight reduction from 2023 peak.',
 };
 
 export default function CrimeTimeline() {
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
     const [yearIndex, setYearIndex] = useState(0);
     const [playing, setPlaying] = useState(false);
+
+    // Login gate
+    if (!isAuthenticated) {
+        return (
+            <div className="min-h-screen flex items-center justify-center px-6">
+                <div className="glass-panel rounded-2xl border border-white/10 p-10 text-center max-w-md">
+                    <LogIn size={48} className="text-neon-teal mx-auto mb-4" />
+                    <h2 className="text-2xl font-bold text-white mb-2">Login Required</h2>
+                    <p className="text-gray-400 text-sm mb-6">The Crime Timeline requires authentication. Please log in to access historical trend data.</p>
+                    <button onClick={() => navigate('/login')}
+                        className="px-8 py-3 bg-neon-teal text-deep-navy font-bold rounded-xl shadow-[0_0_20px_rgba(20,241,217,0.3)] hover:shadow-[0_0_30px_rgba(20,241,217,0.5)] transition-all"
+                    >Log In</button>
+                </div>
+            </div>
+        );
+    }
 
     const selectedYear = years[yearIndex];
     const data = yearlyData[selectedYear];
@@ -80,7 +102,7 @@ export default function CrimeTimeline() {
     }, [playing]);
 
     return (
-        <div className="min-h-screen pt-8 pb-12 px-6 lg:px-8">
+        <div className="min-h-screen pt-28 pb-12 px-6 lg:px-8">
             <div className="max-w-5xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-10">
@@ -91,7 +113,7 @@ export default function CrimeTimeline() {
                         Crime <span className="text-neon-teal">Timeline</span>
                     </h1>
                     <p className="text-gray-400 max-w-xl mx-auto">
-                        Slide through years to see how crime patterns evolved from 2019 to 2024.
+                        Slide through years to see how district-level crime patterns evolved (monthly data, 30-day delay applied).
                     </p>
                 </div>
 
@@ -113,11 +135,12 @@ export default function CrimeTimeline() {
                         </button>
                     </div>
 
-                    {/* Slider */}
+                    {/* Monthly-step slider */}
                     <input
                         type="range"
                         min={0} max={years.length - 1}
                         value={yearIndex}
+                        step={1}
                         onChange={e => { setYearIndex(Number(e.target.value)); setPlaying(false); }}
                         className="w-full h-2 rounded-full appearance-none cursor-pointer"
                         style={{ accentColor: '#14F1D9' }}
@@ -133,7 +156,6 @@ export default function CrimeTimeline() {
                         ))}
                     </div>
 
-                    {/* Year fact */}
                     <motion.p
                         key={selectedYear}
                         initial={{ opacity: 0, y: 4 }}
@@ -187,7 +209,15 @@ export default function CrimeTimeline() {
                     </div>
                 </motion.div>
 
-                <p className="text-center text-xs text-gray-600 mt-8 flex items-center justify-center gap-1">
+                {/* Disclaimer */}
+                <div className="mt-6 p-4 rounded-xl bg-neon-teal/5 border border-neon-teal/20 flex items-start gap-2">
+                    <Info size={14} className="text-neon-teal shrink-0 mt-0.5" />
+                    <p className="text-gray-500 text-xs leading-relaxed">
+                        This estimate is based on historical data and is for general awareness only. Do not use this for any unlawful purpose. Data shown at district level only with a 30-day minimum delay.
+                    </p>
+                </div>
+
+                <p className="text-center text-xs text-gray-600 mt-4 flex items-center justify-center gap-1">
                     <ShieldCheck size={12} /> Aggregated historical data. No individual or location-specific records shown.
                 </p>
             </div>
