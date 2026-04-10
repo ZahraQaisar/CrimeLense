@@ -3,15 +3,17 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const ProtectedRoute = ({ children, requireAdmin = false }) => {
-    const { isAuthenticated, user } = useAuth();
+    const { isAuthenticated, isLoading, user } = useAuth();
     const location = useLocation();
+
+    // Wait until localStorage auth state has been read — prevents false redirect on refresh
+    if (isLoading) return null;
 
     if (!isAuthenticated) {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
     if (requireAdmin && user?.role !== 'admin') {
-        // Logged in but not an admin, redirect to normal user dashboard
         return <Navigate to="/app/dashboard" replace />;
     }
 

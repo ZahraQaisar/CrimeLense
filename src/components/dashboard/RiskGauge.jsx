@@ -11,7 +11,7 @@ const RiskGauge = ({ score }) => {
 
     const getColor = (s) => {
         if (s < 40) return "#22C55E"; // Safe Green
-        if (s < 70) return "#F59E0B"; // Warning Amber
+        if (s < 70) return "#0ea5e9"; // Brand Blue (replaces amber)
         return "#FF4D4D"; // Danger Red
     };
 

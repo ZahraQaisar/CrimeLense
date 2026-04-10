@@ -59,7 +59,7 @@ const yearlyData = {
 };
 
 const years = [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026];
-const COLORS = { Theft: '#14F1D9', Assault: '#FF4D4D', Burglary: '#F59E0B', Vandalism: '#6366F1' };
+const COLORS = { Theft: '#14F1D9', Assault: '#FF4D4D', Burglary: '#F59E0B', Vandalism: '#0ea5e9' };
 
 const yearFacts = {
     2019: 'Pre-pandemic baseline. Stable crime distribution with summer peaks.',

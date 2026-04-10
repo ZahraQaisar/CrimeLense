@@ -13,6 +13,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);  // true until localStorage is read
 
     // Load auth state from localStorage on mount
     useEffect(() => {
@@ -27,6 +28,7 @@ export const AuthProvider = ({ children }) => {
                 localStorage.removeItem('crimelense_auth');
             }
         }
+        setIsLoading(false); // done reading — safe to render protected routes
     }, []);
 
     // Save auth state to localStorage whenever it changes
@@ -55,6 +57,7 @@ export const AuthProvider = ({ children }) => {
 
     const value = {
         isAuthenticated,
+        isLoading,
         user,
         login,
         logout,

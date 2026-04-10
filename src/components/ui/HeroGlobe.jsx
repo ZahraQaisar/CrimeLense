@@ -64,8 +64,8 @@ const HeroGlobe = () => (
                 {/* === Outer rings === */}
                 <circle cx="210" cy="210" r="160" fill="none" stroke="#00d4aa" strokeWidth="1" strokeOpacity="0.2" strokeDasharray="6 4" className="pulse-ring" />
                 <circle cx="210" cy="210" r="130" fill="none" stroke="#00d4aa" strokeWidth="0.8" strokeOpacity="0.15" className="pulse-ring-2" />
-                <circle cx="210" cy="210" r="100" fill="none" stroke="#4a9eff" strokeWidth="0.8" strokeOpacity="0.15" className="pulse-ring" />
-                <circle cx="210" cy="210" r="70" fill="none" stroke="#4a9eff" strokeWidth="0.8" strokeOpacity="0.2" className="pulse-ring-2" />
+                <circle cx="210" cy="210" r="100" fill="none" stroke="#0ea5e9" strokeWidth="0.8" strokeOpacity="0.15" className="pulse-ring" />
+                <circle cx="210" cy="210" r="70" fill="none" stroke="#0ea5e9" strokeWidth="0.8" strokeOpacity="0.2" className="pulse-ring-2" />
 
                 {/* === Globe wireframe === */}
                 <circle cx="210" cy="210" r="155" fill="none" stroke="#00d4aa" strokeWidth="1.2" strokeOpacity="0.3" />
@@ -116,8 +116,8 @@ const HeroGlobe = () => (
                 <circle cx="258" cy="155" r="10" fill="none" stroke="#00d4aa" strokeWidth="1" strokeOpacity="0.3" className="dot-a" />
 
                 {/* Dot B */}
-                <circle className="dot-b" cx="175" cy="235" r="4" fill="#4a9eff" fillOpacity="0.9" />
-                <circle cx="175" cy="235" r="10" fill="none" stroke="#4a9eff" strokeWidth="1" strokeOpacity="0.3" className="dot-b" />
+                <circle className="dot-b" cx="175" cy="235" r="4" fill="#0ea5e9" fillOpacity="0.9" />
+                <circle cx="175" cy="235" r="10" fill="none" stroke="#0ea5e9" strokeWidth="1" strokeOpacity="0.3" className="dot-b" />
 
                 {/* Dot C */}
                 <circle className="dot-c" cx="230" cy="270" r="4" fill="#ff4f6a" fillOpacity="0.9" />
@@ -125,7 +125,7 @@ const HeroGlobe = () => (
 
                 {/* Connection lines between dots */}
                 <line x1="258" y1="155" x2="175" y2="235" stroke="#00d4aa" strokeWidth="0.8" strokeOpacity="0.25" strokeDasharray="4 3" />
-                <line x1="175" y1="235" x2="230" y2="270" stroke="#4a9eff" strokeWidth="0.8" strokeOpacity="0.2" strokeDasharray="4 3" />
+                <line x1="175" y1="235" x2="230" y2="270" stroke="#0ea5e9" strokeWidth="0.8" strokeOpacity="0.2" strokeDasharray="4 3" />
                 <line x1="258" y1="155" x2="230" y2="270" stroke="#ff4f6a" strokeWidth="0.8" strokeOpacity="0.2" strokeDasharray="4 3" />
 
                 {/* Center dot */}

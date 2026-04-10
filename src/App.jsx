@@ -45,6 +45,7 @@ import ManageHotspots from './pages/admin/ManageHotspots';
 import UserManagement from './pages/admin/UserManagement';
 import IncidentLogs from './pages/admin/IncidentLogs';
 import SystemSettings from './pages/admin/SystemSettings';
+import AIInsightsPanel from './pages/admin/AIInsightsPanel';
 
 function ScrollToTop() {
     const { pathname, hash } = useLocation();
@@ -71,64 +72,65 @@ function App() {
             <ScrollToTop />
             <Routes>
                 {/* ── New App Shell (user-facing SaaS dashboard) ───────────── */}
-            <Route path="/app" element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
-                <Route index element={<Navigate to="/app/dashboard" replace />} />
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="tools" element={<Tools />} />
-                <Route path="live-map" element={<LiveMap />} />
-                <Route path="settings" element={<Settings />} />
-                <Route path="help" element={<HelpSupport />} />
-                <Route path="community-feed" element={<CommunityFeed />} />
-            </Route>
+                <Route path="/app" element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
+                    <Route index element={<Navigate to="/app/dashboard" replace />} />
+                    <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="tools" element={<Tools />} />
+                    <Route path="live-map" element={<LiveMap />} />
+                    <Route path="settings" element={<Settings />} />
+                    <Route path="help" element={<HelpSupport />} />
+                    <Route path="community-feed" element={<CommunityFeed />} />
+                </Route>
 
-            {/* ── Public / Marketing Routes ─────────────────────────────── */}
-            <Route element={<MainLayout />}>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/about" element={<AboutPage />} />
+                {/* ── Public / Marketing Routes ─────────────────────────────── */}
+                <Route element={<MainLayout />}>
+                    <Route path="/" element={<LandingPage />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
+                    <Route path="/about" element={<AboutPage />} />
 
-                {/* Extended feature pages */}
-                <Route path="/risk-score" element={<CrimeRiskScore />} />
-                <Route path="/trend-explorer" element={<TrendExplorer />} />
-                <Route path="/neighborhood-summary" element={<NeighborhoodSummary />} />
-                <Route path="/ai-insights" element={<AIInsights />} />
-                <Route path="/nearby-scanner" element={<NearbyScanner />} />
-                <Route path="/awareness" element={<AwarenessHub />} />
-                <Route path="/crime-timeline" element={<CrimeTimeline />} />
-                <Route path="/safety-quiz" element={<SafetyQuiz />} />
-                <Route path="/my-routes" element={<MyRoutes />} />
-                {/* Redirects */}
-                <Route path="/risk-forecast" element={<Navigate to="/" replace />} />
-                <Route path="/safety-ranking" element={<Navigate to="/" replace />} />
-                <Route path="/map-layers" element={<Navigate to="/" replace />} />
-                <Route path="/safety-tips" element={<Navigate to="/awareness" replace />} />
-            </Route>
+                    {/* Extended feature pages */}
+                    <Route path="/risk-score" element={<CrimeRiskScore />} />
+                    <Route path="/trend-explorer" element={<TrendExplorer />} />
+                    <Route path="/neighborhood-summary" element={<NeighborhoodSummary />} />
+                    <Route path="/ai-insights" element={<AIInsights />} />
+                    <Route path="/nearby-scanner" element={<NearbyScanner />} />
+                    <Route path="/awareness" element={<AwarenessHub />} />
+                    <Route path="/crime-timeline" element={<CrimeTimeline />} />
+                    <Route path="/safety-quiz" element={<SafetyQuiz />} />
+                    <Route path="/my-routes" element={<MyRoutes />} />
+                    {/* Redirects */}
+                    <Route path="/risk-forecast" element={<Navigate to="/" replace />} />
+                    <Route path="/safety-ranking" element={<Navigate to="/" replace />} />
+                    <Route path="/map-layers" element={<Navigate to="/" replace />} />
+                    <Route path="/safety-tips" element={<Navigate to="/awareness" replace />} />
+                </Route>
 
-            {/* ── Protected Dashboard ───────────────────────────────────── */}
-            <Route path="/dashboard" element={
-                <ProtectedRoute><DashboardLayout /></ProtectedRoute>
-            }>
-                <Route index element={<Overview />} />
-                <Route path="heatmap" element={<HeatmapPage />} />
-                <Route path="safe-route" element={<SafeRoute />} />
-                <Route path="analysis" element={<Analysis />} />
-                <Route path="prediction" element={<RiskPrediction />} />
-                <Route path="compare" element={<Compare />} />
-                <Route path="profile" element={<div className="text-white">Profile Placeholder</div>} />
-            </Route>
+                {/* ── Protected Dashboard ───────────────────────────────────── */}
+                <Route path="/dashboard" element={
+                    <ProtectedRoute><DashboardLayout /></ProtectedRoute>
+                }>
+                    <Route index element={<Overview />} />
+                    <Route path="heatmap" element={<HeatmapPage />} />
+                    <Route path="safe-route" element={<SafeRoute />} />
+                    <Route path="analysis" element={<Analysis />} />
+                    <Route path="prediction" element={<RiskPrediction />} />
+                    <Route path="compare" element={<Compare />} />
+                    <Route path="profile" element={<div className="text-white">Profile Placeholder</div>} />
+                </Route>
 
-            {/* ── Admin ────────────────────────────────────────────────── */}
-            <Route path="/admin" element={
-                <ProtectedRoute requireAdmin={true}><AdminLayout /></ProtectedRoute>
-            }>
-                <Route index element={<AdminOverview />} />
-                <Route path="hotspots" element={<ManageHotspots />} />
-                <Route path="users" element={<UserManagement />} />
-                <Route path="logs" element={<IncidentLogs />} />
-                <Route path="settings" element={<SystemSettings />} />
-            </Route>
+                {/* ── Admin ────────────────────────────────────────────────── */}
+                <Route path="/admin" element={
+                    <ProtectedRoute requireAdmin={true}><AdminLayout /></ProtectedRoute>
+                }>
+                    <Route index element={<AdminOverview />} />
+                    <Route path="hotspots" element={<ManageHotspots />} />
+                    <Route path="users" element={<UserManagement />} />
+                    <Route path="logs" element={<IncidentLogs />} />
+                    <Route path="ai-insights" element={<AIInsightsPanel />} />
+                    <Route path="settings" element={<SystemSettings />} />
+                </Route>
             </Routes>
         </>
     );

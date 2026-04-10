@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import { Search, AlertTriangle, AlertCircle, Info, CheckCircle, Filter, Download } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+const BRAND_TEAL = '#00d4aa';
+const BRAND_BLUE = '#0ea5e9';
+const BRAND_RED = '#ef4444';
+
 const levels = {
-    ERROR: { icon: AlertCircle, color: 'text-danger', bg: 'bg-danger/10 border-danger/20' },
-    WARNING: { icon: AlertTriangle, color: 'text-warning', bg: 'bg-warning/10 border-warning/20' },
-    INFO: { icon: Info, color: 'text-blue-400', bg: 'bg-blue-400/10 border-blue-400/20' },
-    SUCCESS: { icon: CheckCircle, color: 'text-safe', bg: 'bg-safe/10 border-safe/20' },
+    ERROR:   { icon: AlertCircle,   colorHex: BRAND_RED },
+    WARNING: { icon: AlertTriangle, colorHex: BRAND_RED },
+    INFO:    { icon: Info,          colorHex: '#80a0ff' }, // Lighter blue for info
+    SUCCESS: { icon: CheckCircle,   colorHex: '#ffffff' }, // White for success
 };
 
 const allLogs = [
@@ -24,13 +28,6 @@ const allLogs = [
     { id: 12, ts: '2024-09-04 18:30:00', level: 'INFO', category: 'Data', message: 'Real-time feed reconnected after 2m downtime', user: 'System' },
 ];
 
-const summary = [
-    { label: 'Errors', count: allLogs.filter(l => l.level === 'ERROR').length, color: 'text-danger', bg: 'bg-danger/10' },
-    { label: 'Warnings', count: allLogs.filter(l => l.level === 'WARNING').length, color: 'text-warning', bg: 'bg-warning/10' },
-    { label: 'Info', count: allLogs.filter(l => l.level === 'INFO').length, color: 'text-blue-400', bg: 'bg-blue-400/10' },
-    { label: 'Success', count: allLogs.filter(l => l.level === 'SUCCESS').length, color: 'text-safe', bg: 'bg-safe/10' },
-];
-
 const IncidentLogs = () => {
     const [search, setSearch] = useState('');
     const [levelFilter, setLevelFilter] = useState('All');
@@ -42,6 +39,13 @@ const IncidentLogs = () => {
         (catFilter === 'All' || l.category === catFilter) &&
         (l.message.toLowerCase().includes(search.toLowerCase()) || l.category.toLowerCase().includes(search.toLowerCase()))
     );
+
+    const summary = [
+        { label: 'Errors', count: allLogs.filter(l => l.level === 'ERROR').length, hex: BRAND_RED },
+        { label: 'Warnings', count: allLogs.filter(l => l.level === 'WARNING').length, hex: BRAND_RED },
+        { label: 'Info', count: allLogs.filter(l => l.level === 'INFO').length, hex: '#80a0ff' },
+        { label: 'Success', count: allLogs.filter(l => l.level === 'SUCCESS').length, hex: '#ffffff' },
+    ];
 
     return (
         <div className="space-y-6">
@@ -58,12 +62,13 @@ const IncidentLogs = () => {
 
             {/* Summary row */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {summary.map(({ label, count, color, bg }) => (
-                    <div key={label} className={`glass-panel p-4 rounded-2xl border border-white/5 flex items-center gap-4`}>
-                        <div className={`w-10 h-10 rounded-xl ${bg} flex items-center justify-center ${color} text-lg font-bold`}>
+                {summary.map(({ label, count, hex }) => (
+                    <div key={label} className="glass-panel p-4 rounded-2xl border border-white/5 flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg font-bold"
+                             style={{ background: 'rgba(255,255,255,0.05)', color: hex }}>
                             {count}
                         </div>
-                        <div className={`text-sm font-semibold ${color}`}>{label}</div>
+                        <div className="text-sm font-semibold" style={{ color: hex }}>{label}</div>
                     </div>
                 ))}
             </div>
@@ -78,13 +83,20 @@ const IncidentLogs = () => {
                             placeholder="Search logs..."
                             value={search}
                             onChange={e => setSearch(e.target.value)}
-                            className="w-full pl-9 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-neon-teal/50"
+                            className="w-full pl-9 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder:text-gray-500 focus:outline-none"
+                            onFocus={e => { e.target.style.borderColor = BRAND_TEAL; }}
+                            onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; }}
                         />
                     </div>
                     <div className="flex gap-2 flex-wrap">
                         {['All', 'ERROR', 'WARNING', 'INFO', 'SUCCESS'].map(l => (
                             <button key={l} onClick={() => setLevelFilter(l)}
-                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${levelFilter === l ? 'bg-neon-teal/15 text-neon-teal border-neon-teal/30' : 'text-gray-400 hover:text-white border-transparent hover:bg-white/5'}`}>
+                                className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border"
+                                style={levelFilter === l
+                                  ? { background: 'rgba(0,212,170,0.12)', border: '1px solid rgba(0,212,170,0.28)', color: BRAND_TEAL }
+                                  : { color: '#9ca3af', borderColor: 'transparent' }}
+                                onMouseEnter={e => { if (levelFilter !== l) e.currentTarget.style.color = '#fff' }}
+                                onMouseLeave={e => { if (levelFilter !== l) e.currentTarget.style.color = '#9ca3af' }}>
                                 {l}
                             </button>
                         ))}
@@ -92,33 +104,44 @@ const IncidentLogs = () => {
                     <select
                         value={catFilter}
                         onChange={e => setCatFilter(e.target.value)}
-                        className="px-3 py-2 bg-white/5 border border-white/10 rounded-xl text-sm text-gray-300 focus:outline-none focus:border-neon-teal/50"
+                        className="px-3 py-2 bg-white/5 border border-white/10 rounded-xl text-sm text-gray-300 focus:outline-none transition-colors"
+                        onFocus={e => { e.target.style.borderColor = BRAND_TEAL; }}
+                        onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; }}
+                        style={{
+                            appearance: 'none',
+                            WebkitAppearance: 'none',
+                            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
+                            backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center', paddingRight: '28px'
+                        }}
                     >
-                        {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                        {categories.map(c => <option key={c} value={c} style={{ background: '#0f1923' }}>{c}</option>)}
                     </select>
                 </div>
 
                 {/* Log list */}
                 <div className="divide-y divide-white/5 max-h-[560px] overflow-y-auto">
                     {filtered.map((log, i) => {
-                        const { icon: Icon, color, bg } = levels[log.level];
+                        const { icon: Icon, colorHex } = levels[log.level];
                         return (
                             <motion.div key={log.id}
                                 initial={{ opacity: 0, x: -6 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: i * 0.02 }}
-                                className="flex items-start gap-4 px-5 py-4 hover:bg-white/3 transition-colors"
+                                className="flex items-start gap-4 px-5 py-4 transition-colors"
+                                onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.03)'}
+                                onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                             >
                                 {/* Level indicator */}
-                                <div className={`mt-0.5 w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border ${bg}`}>
-                                    <Icon size={15} className={color} />
+                                <div className="mt-0.5 w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border"
+                                     style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.05)', color: colorHex }}>
+                                    <Icon size={15} />
                                 </div>
 
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-2 flex-wrap mb-1">
-                                        <span className={`text-xs font-bold ${color}`}>{log.level}</span>
+                                        <span className="text-xs font-bold" style={{ color: colorHex }}>{log.level}</span>
                                         <span className="text-xs text-gray-600">·</span>
-                                        <span className="text-xs px-2 py-0.5 rounded-full bg-white/5 border border-white/8 text-gray-400">{log.category}</span>
+                                        <span className="text-xs px-2 py-0.5 rounded-full border" style={{ background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.08)', color: '#9ca3af' }}>{log.category}</span>
                                         <span className="text-xs text-gray-600">·</span>
                                         <span className="text-xs text-gray-500">{log.user}</span>
                                     </div>

@@ -35,8 +35,8 @@ const HeroCanvas = () => {
         const MAX_DIST = 160;
         const isLight = document.documentElement.getAttribute('data-theme') === 'light';
         const COLORS = isLight
-            ? ['#009e80', '#1a68d4', '#009e80', '#009e80', '#6366f1']
-            : ['#00d4aa', '#4a9eff', '#00d4aa', '#00d4aa', '#6366f1'];
+            ? ['#009e80', '#1a68d4', '#009e80', '#009e80', '#0ea5e9']
+            : ['#00d4aa', '#0ea5e9', '#00d4aa', '#00d4aa', '#0ea5e9'];
         let particles = [];
 
         const initParticles = () => {

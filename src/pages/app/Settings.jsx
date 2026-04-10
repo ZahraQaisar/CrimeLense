@@ -184,7 +184,7 @@ const Settings = () => {
                                     { color: '#3B82F6' },
                                     { color: '#8B5CF6' },
                                     { color: '#EC4899' },
-                                    { color: '#F59E0B' },
+                                    { color: '#0ea5e9' },
                                 ].map((item, idx) => (
                                     <div 
                                         key={idx} 

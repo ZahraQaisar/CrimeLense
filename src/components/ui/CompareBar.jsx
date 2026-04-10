@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 const CompareBar = ({ label, score, color }) => {
   const barRef = useRef(null);
-  const autoColor = score >= 70 ? 'var(--danger)' : score >= 35 ? 'var(--warning)' : 'var(--accent)';
+  const autoColor = score >= 70 ? 'var(--danger)' : score >= 35 ? '#0ea5e9' : 'var(--accent)';
   const barColor = color || autoColor;
 
   useEffect(() => {

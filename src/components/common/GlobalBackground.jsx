@@ -15,7 +15,7 @@ const ORBS = [
     /* color,        size,  top,   left,  duration, delay */
     { color: '#00d4aa', size: 520, top: -10, left: -8, dur: 18, delay: 0 },
     { color: '#ff4f6a', size: 400, top: 40, left: 60, dur: 22, delay: -6 },
-    { color: '#4a9eff', size: 350, top: 70, left: -5, dur: 26, delay: -12 },
+    { color: '#0ea5e9', size: 350, top: 70, left: -5, dur: 26, delay: -12 },
     { color: '#ffaa3b', size: 300, top: 10, left: 80, dur: 20, delay: -4 },
     { color: '#00d4aa', size: 250, top: 55, left: 45, dur: 30, delay: -9 },
 ];
