@@ -287,7 +287,7 @@ const DeleteModal = ({ open, name, onConfirm, onClose }) => (
             </button>
           </div>
         </motion.div>
-      </Overlay>
+      </motion.div>
     )}
   </AnimatePresence>
 );
