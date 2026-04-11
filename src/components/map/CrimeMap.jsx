@@ -38,7 +38,7 @@ const HeatmapLayer = ({ points }) => {
                 max: 1.0,
                 gradient: {
                     0.4: '#14F1D9', // Neon Teal
-                    0.6: '#F59E0B', // Warning Amber
+                    0.6: '#0ea5e9', // Brand Blue
                     1.0: '#FF4D4D'  // Danger Red
                 }
             });

@@ -34,7 +34,7 @@ const tipCategories = [
         ],
     },
     {
-        key: 'burglary', label: 'Burglary', color: '#6366F1', Icon: Shield,
+        key: 'burglary', label: 'Burglary', color: '#0ea5e9', Icon: Shield,
         tips: [
             { icon: Shield, text: 'Always double-lock doors and windows before leaving home, even briefly.' },
             { icon: Eye, text: 'Install motion-sensor lights at entry points. Burglars avoid well-lit homes.' },

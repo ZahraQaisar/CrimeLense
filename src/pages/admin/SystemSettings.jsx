@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import { Settings, Bell, Shield, Database, RefreshCw, Save, AlertTriangle, X, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const BRAND_TEAL = '#00d4aa';
+const BRAND_BLUE = '#0ea5e9';
+const BRAND_RED = '#ef4444';
+
 // ── Toggle Component ───────────────────────────────────────────────────────
 const Toggle = ({ enabled, onChange, label, desc }) => (
   <div className="flex items-center justify-between py-3.5">
@@ -12,7 +16,11 @@ const Toggle = ({ enabled, onChange, label, desc }) => (
     </div>
     <button
       onClick={() => onChange(!enabled)}
-      className={`relative w-11 h-6 rounded-full transition-all duration-300 shrink-0 ${enabled ? 'bg-neon-teal shadow-[0_0_10px_rgba(20,241,217,0.4)]' : 'bg-white/10'}`}
+      className="relative w-11 h-6 rounded-full transition-all duration-300 shrink-0"
+      style={{
+        background: enabled ? BRAND_TEAL : 'rgba(255,255,255,0.1)',
+        boxShadow: enabled ? `0 0 10px rgba(0,212,170,0.4)` : 'none'
+      }}
     >
       <span className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-all duration-300 ${enabled ? 'left-6' : 'left-1'}`} />
     </button>
@@ -23,13 +31,24 @@ const Toggle = ({ enabled, onChange, label, desc }) => (
 const Section = ({ icon: Icon, title, children }) => (
   <div className="glass-panel rounded-2xl border border-white/5 overflow-hidden">
     <div className="flex items-center gap-3 px-6 py-4 border-b border-white/5">
-      <div className="w-9 h-9 rounded-xl bg-neon-teal/10 flex items-center justify-center text-neon-teal">
+      <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(0,212,170,0.1)', color: BRAND_TEAL }}>
         <Icon size={18} />
       </div>
       <h2 className="text-base font-bold text-white">{title}</h2>
     </div>
     <div className="px-6 divide-y divide-white/5">{children}</div>
   </div>
+);
+
+/* ── Primary action button (brand teal) ─────────────────────────────────── */
+const PrimaryBtn = ({ onClick, children, disabled, style }) => (
+  <button onClick={onClick} disabled={disabled}
+    className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed w-fit"
+    style={{ background: BRAND_TEAL, color: '#0b0e14', boxShadow: `0 0 14px rgba(0,212,170,0.22)`, ...style }}
+    onMouseEnter={e => !disabled && (e.currentTarget.style.background = '#22e8bc')}
+    onMouseLeave={e => !disabled && (e.currentTarget.style.background = BRAND_TEAL)}>
+    {children}
+  </button>
 );
 
 // ── Danger Action Confirm Modal ────────────────────────────────────────────
@@ -63,7 +82,7 @@ const DangerModal = ({ open, action, onConfirm, onClose }) => {
             initial={{ scale: 0.93, opacity: 0, y: 16 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.93, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 320, damping: 28 }}
             className="w-full max-w-sm shadow-2xl p-6"
-            style={{ background: '#0f1923', border: '1px solid rgba(239,68,68,0.25)', borderRadius: '16px' }}
+            style={{ background: '#0f1923', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '16px' }}
             onClick={e => e.stopPropagation()}
           >
             {confirmed ? (
@@ -72,7 +91,7 @@ const DangerModal = ({ open, action, onConfirm, onClose }) => {
                 initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
                 className="flex flex-col items-center py-4 gap-3"
               >
-                <div className="w-12 h-12 rounded-full bg-safe/10 flex items-center justify-center text-safe">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: 'rgba(0,212,170,0.1)', color: BRAND_TEAL }}>
                   <CheckCircle size={24} />
                 </div>
                 <p className="text-sm font-semibold text-white">{action.successMsg}</p>
@@ -83,7 +102,7 @@ const DangerModal = ({ open, action, onConfirm, onClose }) => {
                 {/* Header */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-danger/10 flex items-center justify-center text-danger shrink-0">
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(239,68,68,0.1)', color: BRAND_RED }}>
                       <action.icon size={18} />
                     </div>
                     <h3 className="text-base font-bold text-white">{action.label}</h3>
@@ -94,20 +113,23 @@ const DangerModal = ({ open, action, onConfirm, onClose }) => {
                 </div>
 
                 {/* Warning box */}
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-danger/5 border border-danger/15 mb-4">
-                  <AlertTriangle size={15} className="text-danger shrink-0 mt-0.5" />
-                  <p className="text-xs text-danger/80 leading-relaxed">{action.warning}</p>
+                <div className="flex items-start gap-3 p-3 rounded-xl mb-4 border" style={{ background: 'rgba(239,68,68,0.05)', borderColor: 'rgba(239,68,68,0.1)' }}>
+                  <AlertTriangle size={15} className="mt-0.5 shrink-0" style={{ color: BRAND_RED }} />
+                  <p className="text-xs leading-relaxed" style={{ color: 'rgba(239,68,68,0.8)' }}>{action.warning}</p>
                 </div>
 
                 <p className="text-sm text-gray-400 mb-5">{action.desc}</p>
 
                 <div className="flex gap-3 justify-end">
                   <button onClick={onClose}
-                    className="px-4 py-2 rounded-xl border border-white/10 text-gray-400 hover:text-white text-sm font-semibold transition-all">
+                    className="px-4 py-2 rounded-xl border border-white/10 text-gray-400 hover:text-white hover:border-white/20 text-sm font-semibold transition-all">
                     Cancel
                   </button>
                   <button onClick={handleConfirm}
-                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-danger/10 border border-danger/30 text-danger hover:bg-danger/20 text-sm font-bold transition-all">
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all text-white border hover:bg-white/5"
+                    style={{ background: 'rgba(239,68,68,0.1)', borderColor: 'rgba(239,68,68,0.3)', color: BRAND_RED }}
+                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.2)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(239,68,68,0.1)'}>
                     <action.icon size={13} /> {action.btn}
                   </button>
                 </div>
@@ -186,8 +208,6 @@ const SystemSettings = () => {
   };
 
   const handleDangerConfirm = () => {
-    // In real app: call backend API here
-    // e.g. if action.key === 'reset' → reset settings state
     if (dangerModal.action?.key === 'reset') {
       setTimeout(() => {
         setSettings({
@@ -221,11 +241,15 @@ const SystemSettings = () => {
         </div>
         <button
           onClick={handleSave}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all w-fit ${
-            saved
-              ? 'bg-safe text-white shadow-[0_0_20px_rgba(34,197,94,0.4)]'
-              : 'bg-neon-teal text-deep-navy shadow-[0_0_20px_rgba(20,241,217,0.3)] hover:bg-white'
-          }`}
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all w-fit"
+          style={{
+            background: saved ? 'transparent' : BRAND_TEAL,
+            color: saved ? BRAND_TEAL : '#0b0e14',
+            border: saved ? `1px solid ${BRAND_TEAL}` : '1px solid transparent',
+            boxShadow: saved ? 'none' : `0 0 20px rgba(0,212,170,0.3)`
+          }}
+          onMouseEnter={e => { if (!saved) e.currentTarget.style.background = '#22e8bc'; }}
+          onMouseLeave={e => { if (!saved) e.currentTarget.style.background = BRAND_TEAL; }}
         >
           {saved ? <CheckCircle size={15} /> : <Save size={15} />}
           {saved ? 'Saved!' : 'Save Changes'}
@@ -237,7 +261,8 @@ const SystemSettings = () => {
         {settings.maintenanceMode && (
           <motion.div
             initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-            className="flex items-center gap-3 p-4 rounded-2xl bg-warning/10 border border-warning/30 text-warning"
+            className="flex items-center gap-3 p-4 rounded-2xl border"
+            style={{ background: 'rgba(239,68,68,0.1)', borderColor: 'rgba(239,68,68,0.2)', color: BRAND_RED }}
           >
             <AlertTriangle size={18} className="shrink-0" />
             <span className="text-sm font-semibold">Maintenance mode is active — public access is restricted</span>
@@ -259,7 +284,9 @@ const SystemSettings = () => {
             </div>
             <select value={modelVersion} onChange={e => setModelVersion(e.target.value)}
               style={selectStyle}
-              className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-neon-teal/50">
+              className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:outline-none transition-colors"
+              onFocus={e => { e.target.style.borderColor = BRAND_TEAL }}
+              onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)' }}>
               {['v2.4', 'v2.3', 'v2.2'].map(v => (
                 <option key={v} value={v} style={{ background: '#0f1923' }}>{v}</option>
               ))}
@@ -292,7 +319,9 @@ const SystemSettings = () => {
             </div>
             <select value={retainDays} onChange={e => setRetainDays(e.target.value)}
               style={selectStyle}
-              className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-neon-teal/50">
+              className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:outline-none transition-colors"
+              onFocus={e => { e.target.style.borderColor = BRAND_TEAL }}
+              onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)' }}>
               {['30', '60', '90', '180', '365'].map(d => (
                 <option key={d} value={d} style={{ background: '#0f1923' }}>{d} days</option>
               ))}
@@ -301,27 +330,30 @@ const SystemSettings = () => {
         </Section>
       </div>
 
-      {/* Danger Zone */}
-      <div className="glass-panel rounded-2xl border border-danger/20 overflow-hidden">
-        <div className="flex items-center gap-3 px-6 py-4 border-b border-danger/15">
-          <div className="w-9 h-9 rounded-xl bg-danger/10 flex items-center justify-center text-danger">
+      {/* Critical Actions (Replaces "Danger Zone") */}
+      <div className="glass-panel rounded-2xl border overflow-hidden" style={{ borderColor: 'rgba(239,68,68,0.2)' }}>
+        <div className="flex items-center gap-3 px-6 py-4 border-b" style={{ borderColor: 'rgba(239,68,68,0.15)' }}>
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(239,68,68,0.1)', color: BRAND_RED }}>
             <AlertTriangle size={18} />
           </div>
           <div>
-            <h2 className="text-base font-bold text-danger">Danger Zone</h2>
-            <p className="text-xs text-danger/50 mt-0.5">These actions are irreversible. Proceed with caution.</p>
+            <h2 className="text-base font-bold" style={{ color: BRAND_RED }}>Danger Zone</h2>
+            <p className="text-xs mt-0.5" style={{ color: 'rgba(239,68,68,0.6)' }}>These actions are irreversible. Proceed with caution.</p>
           </div>
         </div>
         <div className="px-4 sm:px-6 py-4 space-y-3">
           {dangerActions.map(({ key, label, desc, btn, icon: Icon }) => (
-            <div key={key} className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 rounded-xl bg-danger/5 border border-danger/15">
+            <div key={key} className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 rounded-xl border" style={{ background: 'rgba(239,68,68,0.05)', borderColor: 'rgba(239,68,68,0.15)' }}>
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-semibold text-white">{label}</div>
-                <div className="text-xs text-gray-500 mt-0.5">{desc}</div>
+                <div className="text-xs text-gray-400 mt-0.5">{desc}</div>
               </div>
               <button
                 onClick={() => openDanger(key)}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg border border-danger/40 text-danger text-xs font-bold hover:bg-danger/10 transition-all shrink-0 w-fit"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg border text-xs font-bold transition-all shrink-0 w-fit"
+                style={{ borderColor: 'rgba(239,68,68,0.4)', color: BRAND_RED }}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.1)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
               >
                 <Icon size={13} /> {btn}
               </button>

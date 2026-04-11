@@ -10,8 +10,8 @@ const riskZones = [
 
 const mapDots = [
   { x: '28%', y: '42%', color: 'var(--danger)', label: 'Downtown' },
-  { x: '45%', y: '30%', color: 'var(--warning)', label: 'Northside' },
-  { x: '63%', y: '55%', color: 'var(--warning)', label: 'Eastgate' },
+  { x: '45%', y: '30%', color: '#0ea5e9', label: 'Northside' },
+  { x: '63%', y: '55%', color: '#0ea5e9', label: 'Eastgate' },
   { x: '38%', y: '65%', color: 'var(--accent)', label: 'Riverside' },
   { x: '72%', y: '38%', color: 'var(--accent)', label: 'Westbrook' },
   { x: '55%', y: '72%', color: 'var(--danger)', label: 'Southend' },
@@ -60,7 +60,7 @@ const LiveMap = () => {
           <p className="text-xs font-semibold mb-1" style={{ color: 'var(--text-muted)' }}>Risk Level</p>
           {[
             { color: 'var(--danger)', label: 'High' },
-            { color: 'var(--warning)', label: 'Medium' },
+            { color: '#0ea5e9', label: 'Medium' },
             { color: 'var(--accent)', label: 'Low' },
           ].map(({ color, label }) => (
             <div key={label} className="flex items-center gap-2">

@@ -48,7 +48,7 @@ const AmbientBackground = () => (
             .cl-orb-2 {
                 top: 35%; right: -12%;
                 width: 600px; height: 600px;
-                background: radial-gradient(circle, rgba(74,158,255,0.15) 0%, transparent 70%);
+                background: radial-gradient(circle, rgba(14,165,233,0.15) 0%, transparent 70%);
                 animation: cl-orb 28s ease-in-out -9s infinite alternate;
             }
             .cl-orb-3 {

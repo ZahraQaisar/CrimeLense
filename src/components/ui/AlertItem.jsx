@@ -2,7 +2,7 @@ import React from 'react';
 
 const dotColors = {
   high: 'var(--danger)',
-  medium: 'var(--warning)',
+  medium: '#0ea5e9',
   low: 'var(--accent)',
 };
 

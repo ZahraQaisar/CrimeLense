@@ -7,7 +7,7 @@ import {
 
 const allInsights = [
     {
-        id: 1, icon: Moon, color: '#6366F1',
+        id: 1, icon: Moon, color: '#0ea5e9',
         category: 'Robbery',
         confidence: 91,
         insight: 'Robbery incidents tend to increase during late-night hours citywide, particularly in commercial zones across the city.',

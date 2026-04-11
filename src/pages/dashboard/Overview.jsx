@@ -72,7 +72,7 @@ const Overview = () => {
                 {[
                     { label: 'Find Safe Route', icon: Navigation, route: '/safe-route', color: '#14F1D9', desc: 'Plan the safest path' },
                     { label: 'Check Area Risk', icon: ShieldCheck, route: '/risk-score', color: '#F59E0B', desc: 'Look up any zone' },
-                    { label: 'Explore Heatmap', icon: Map, route: '/dashboard/heatmap', color: '#6366F1', desc: 'View crime patterns' },
+                    { label: 'Explore Heatmap', icon: Map, route: '/dashboard/heatmap', color: '#0ea5e9', desc: 'View crime patterns' },
                 ].map((action, i) => (
                     <motion.button key={action.label}
                         initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 + i * 0.07 }}
