@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Zap, Navigation, BarChart2, Target } from 'lucide-react';
+import { Zap, Navigation, BarChart2, Target, ChevronDown } from 'lucide-react';
 import ChipGroup from '../../components/ui/ChipGroup';
 import RiskRing from '../../components/ui/RiskRing';
 import RouteViz from '../../components/ui/RouteViz';
@@ -17,6 +17,35 @@ const inputStyle = () => ({
   fontSize: 13,
   outline: 'none',
 });
+
+/* Wrapper for selects — positions the custom chevron absolutely */
+const selectWrapStyle = { position: 'relative', width: '100%' };
+
+/* Select-specific style — hides native arrow, adds right padding for chevron */
+const selectStyle = () => ({
+  ...inputStyle(),
+  appearance: 'none',
+  WebkitAppearance: 'none',
+  MozAppearance: 'none',
+  paddingRight: 36,   /* space for the custom chevron */
+  cursor: 'pointer',
+});
+
+/* Chevron overlay shared by all selects */
+const SelectChevron = () => (
+  <span style={{
+    position: 'absolute',
+    right: 10,
+    top: '50%',
+    transform: 'translateY(-50%)',
+    pointerEvents: 'none',
+    color: 'var(--text-muted)',
+    display: 'flex',
+    alignItems: 'center',
+  }}>
+    <ChevronDown size={15} />
+  </span>
+);
 
 const labelStyle = { color: 'var(--text-muted)', fontSize: 12, fontWeight: 500, marginBottom: 6, display: 'block' };
 
@@ -90,14 +119,17 @@ const CrimePredictionPanel = () => {
           </div>
           <div>
             <label style={labelStyle}>Time of day</label>
-            <select value={time} onChange={e => setTime(e.target.value)} style={{ ...inputStyle(), cursor: 'pointer' }}
-              onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--border-default)'}>
-              <option value="any">Any time</option>
-              <option value="morning">Morning</option>
-              <option value="afternoon">Afternoon</option>
-              <option value="evening">Evening</option>
-              <option value="night">Night</option>
-            </select>
+            <div style={selectWrapStyle}>
+              <select value={time} onChange={e => setTime(e.target.value)} style={selectStyle()}
+                onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--border-default)'}>
+                <option value="any">Any time</option>
+                <option value="morning">Morning</option>
+                <option value="afternoon">Afternoon</option>
+                <option value="evening">Evening</option>
+                <option value="night">Night</option>
+              </select>
+              <SelectChevron />
+            </div>
           </div>
           <button type="submit" className="w-full py-2.5 rounded-lg text-sm font-bold transition-all duration-150"
             style={{ background: 'var(--accent)', color: '#0b0e14', fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700 }}
@@ -218,13 +250,16 @@ const SafeRoutePanel = () => {
           </div>
           <div>
             <label style={labelStyle}>Travel time</label>
-            <select value={travelTime} onChange={e => setTravelTime(e.target.value)} style={{ ...inputStyle(), cursor: 'pointer' }}
-              onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--border-default)'}>
-              <option value="now">Now</option>
-              <option value="morning">Morning rush</option>
-              <option value="evening">Evening rush</option>
-              <option value="night">Night</option>
-            </select>
+            <div style={selectWrapStyle}>
+              <select value={travelTime} onChange={e => setTravelTime(e.target.value)} style={selectStyle()}
+                onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--border-default)'}>
+                <option value="now">Now</option>
+                <option value="morning">Morning rush</option>
+                <option value="evening">Evening rush</option>
+                <option value="night">Night</option>
+              </select>
+              <SelectChevron />
+            </div>
           </div>
           <button type="submit" className="w-full py-2.5 rounded-lg text-sm font-bold transition-all duration-150"
             style={{ background: 'var(--accent)', color: '#0b0e14', fontWeight: 700 }}
@@ -326,24 +361,30 @@ const CompareAreasPanel = () => {
         </div>
         <div>
           <label style={labelStyle}>Time period</label>
-          <select value={timePeriod} onChange={e => setTimePeriod(e.target.value)} style={{ ...inputStyle(), cursor: 'pointer' }}
-            onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--border-default)'}>
-            <option value="24h">Last 24 hours</option>
-            <option value="7d">Last 7 days</option>
-            <option value="30d">Last 30 days</option>
-            <option value="90d">Last 90 days</option>
-          </select>
+          <div style={selectWrapStyle}>
+            <select value={timePeriod} onChange={e => setTimePeriod(e.target.value)} style={selectStyle()}
+              onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--border-default)'}>
+              <option value="24h">Last 24 hours</option>
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last 30 days</option>
+              <option value="90d">Last 90 days</option>
+            </select>
+            <SelectChevron />
+          </div>
         </div>
         <div>
           <label style={labelStyle}>Crime type</label>
-          <select value={crimeType} onChange={e => setCrimeType(e.target.value)} style={{ ...inputStyle(), cursor: 'pointer' }}
-            onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--border-default)'}>
-            <option value="all">All crime types</option>
-            <option value="theft">Theft</option>
-            <option value="assault">Assault</option>
-            <option value="vandalism">Vandalism</option>
-            <option value="burglary">Burglary</option>
-          </select>
+          <div style={selectWrapStyle}>
+            <select value={crimeType} onChange={e => setCrimeType(e.target.value)} style={selectStyle()}
+              onFocus={e => e.target.style.borderColor = 'var(--accent)'} onBlur={e => e.target.style.borderColor = 'var(--border-default)'}>
+              <option value="all">All crime types</option>
+              <option value="theft">Theft</option>
+              <option value="assault">Assault</option>
+              <option value="vandalism">Vandalism</option>
+              <option value="burglary">Burglary</option>
+            </select>
+            <SelectChevron />
+          </div>
         </div>
         <button 
           onClick={handleCompare}
