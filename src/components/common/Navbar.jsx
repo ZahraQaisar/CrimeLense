@@ -93,7 +93,7 @@ const Navbar = () => {
                                 <path d="M 50 10 A 40 40 0 0 1 90 50" stroke="currentColor" strokeWidth="10" strokeLinecap="round" className="text-neon-teal" />
                                 <path d="M 50 90 A 40 40 0 0 1 10 50" stroke="currentColor" strokeWidth="10" strokeLinecap="round" className="text-blue-500" />
                                 {/* Inner aperture core */}
-                                <circle cx="50" cy="50" r="16" fill="currentColor" className="text-white" />
+                                <circle cx="50" cy="50" r="16" fill="currentColor" className="text-red-500" />
                                 <circle cx="50" cy="50" r="6" fill="currentColor" className="text-deep-navy" />
                             </svg>
                         </div>
