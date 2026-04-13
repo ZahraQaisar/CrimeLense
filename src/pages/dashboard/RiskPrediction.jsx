@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Activity, Calendar, Clock, MapPin, AlertCircle, CheckCircle } from 'lucide-react';
 import Input from '../../components/common/Input';
+import Select from '../../components/common/Select';
 import RiskGauge from '../../components/dashboard/RiskGauge';
 
 const RiskPrediction = () => {
@@ -74,19 +75,16 @@ const RiskPrediction = () => {
                         />
                     </div>
 
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-300">Crime Category</label>
-                        <select
-                            className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon-teal/50"
-                            value={formData.type}
-                            onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                        >
-                            <option value="Theft">Street Theft</option>
-                            <option value="Assault">Assault</option>
-                            <option value="Burglary">Burglary</option>
-                            <option value="Vandalism">Vandalism</option>
-                        </select>
-                    </div>
+                    <Select
+                        label="Crime Category"
+                        value={formData.type}
+                        onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                    >
+                        <option value="Theft">Street Theft</option>
+                        <option value="Assault">Assault</option>
+                        <option value="Burglary">Burglary</option>
+                        <option value="Vandalism">Vandalism</option>
+                    </Select>
 
                     <button
                         type="submit"
