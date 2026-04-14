@@ -143,7 +143,7 @@ const AdminLayout = () => {
                                 style={{ background: 'rgba(0, 212, 170, 0.1)', border: '1px solid rgba(0, 212, 170, 0.25)' }}>
                                 <svg viewBox="0 0 100 100" className="w-full h-full p-2" fill="none">
                                     <path d="M 50 10 A 40 40 0 0 1 90 50" stroke="#00d4aa" strokeWidth="10" strokeLinecap="round" />
-                                    <path d="M 50 90 A 40 40 0 0 1 10 50" stroke="#0ea5e9" strokeWidth="10" strokeLinecap="round" />
+                                    <path d="M 50 90 A 40 40 0 0 1 10 50" stroke="white" strokeWidth="10" strokeLinecap="round" />
                                     <circle cx="50" cy="50" r="16" fill="#ef4444" />
                                     <circle cx="50" cy="50" r="6" fill="#0b0e14" />
                                 </svg>
@@ -172,7 +172,7 @@ const AdminLayout = () => {
                         >
                             <svg viewBox="0 0 100 100" className="w-full h-full p-2" fill="none">
                                 <path d="M 50 10 A 40 40 0 0 1 90 50" stroke="#00d4aa" strokeWidth="10" strokeLinecap="round" />
-                                <path d="M 50 90 A 40 40 0 0 1 10 50" stroke="#0ea5e9" strokeWidth="10" strokeLinecap="round" />
+                                <path d="M 50 90 A 40 40 0 0 1 10 50" stroke="white" strokeWidth="10" strokeLinecap="round" />
                                 <circle cx="50" cy="50" r="16" fill="#ef4444" />
                             </svg>
                         </motion.div>
@@ -435,7 +435,7 @@ const AdminLayout = () => {
                             style={{ background: 'rgba(0, 212, 170, 0.1)', border: '1px solid rgba(0, 212, 170, 0.25)' }}>
                             <svg viewBox="0 0 100 100" className="w-full h-full p-1.5" fill="none">
                                 <path d="M 50 10 A 40 40 0 0 1 90 50" stroke="#00d4aa" strokeWidth="10" strokeLinecap="round" />
-                                <path d="M 50 90 A 40 40 0 0 1 10 50" stroke="#0ea5e9" strokeWidth="10" strokeLinecap="round" />
+                                <path d="M 50 90 A 40 40 0 0 1 10 50" stroke="white" strokeWidth="10" strokeLinecap="round" />
                                 <circle cx="50" cy="50" r="16" fill="#ef4444" />
                                 <circle cx="50" cy="50" r="6" fill="#0b0e14" />
                             </svg>

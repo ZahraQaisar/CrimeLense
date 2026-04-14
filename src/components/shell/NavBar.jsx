@@ -68,7 +68,7 @@ const NavBar = () => {
             style={{ background: 'var(--accent-dim)', border: '1px solid var(--accent-border)' }}>
             <svg viewBox="0 0 100 100" className="w-full h-full p-2" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M 50 10 A 40 40 0 0 1 90 50" stroke="var(--accent)" strokeWidth="10" strokeLinecap="round" />
-              <path d="M 50 90 A 40 40 0 0 1 10 50" stroke="var(--info)" strokeWidth="10" strokeLinecap="round" />
+              <path d="M 50 90 A 40 40 0 0 1 10 50" stroke="white" strokeWidth="10" strokeLinecap="round" />
               <circle cx="50" cy="50" r="16" fill="#ef4444" />
               <circle cx="50" cy="50" r="6" fill="var(--surface)" />
             </svg>
