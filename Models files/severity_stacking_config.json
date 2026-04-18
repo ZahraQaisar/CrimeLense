@@ -1,0 +1,17 @@
+{
+  "requires_stacking": true,
+  "stacking_features": [
+    "predicted_category",
+    "binary_risk"
+  ],
+  "total_features": 44,
+  "base_features": 42,
+  "severity_order": [
+    "LOW",
+    "MEDIUM",
+    "HIGH",
+    "CRITICAL"
+  ],
+  "binary_threshold": 0.49000000000000016,
+  "note": "Run cat+binary prediction first, then append to features"
+}
