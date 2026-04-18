@@ -1,0 +1,506 @@
+[
+  {
+    "cluster_id": 0,
+    "lat": 34.03522691238824,
+    "lon": -118.30130922646931,
+    "crime_count": 62971,
+    "tier": "HIGH",
+    "severity_dist": {
+      "CRITICAL": 0.322,
+      "HIGH": 0.252,
+      "LOW": 0.22,
+      "MEDIUM": 0.206
+    },
+    "radius_km": 12.34
+  },
+  {
+    "cluster_id": 1,
+    "lat": 34.19969954772368,
+    "lon": -118.47182429918507,
+    "crime_count": 23437,
+    "tier": "HIGH",
+    "severity_dist": {
+      "CRITICAL": 0.264,
+      "HIGH": 0.264,
+      "LOW": 0.247,
+      "MEDIUM": 0.225
+    },
+    "radius_km": 11.91
+  },
+  {
+    "cluster_id": 9,
+    "lat": 33.955150241545894,
+    "lon": -118.38889836956521,
+    "crime_count": 1656,
+    "tier": "MEDIUM",
+    "severity_dist": {
+      "MEDIUM": 0.366,
+      "HIGH": 0.237,
+      "LOW": 0.23,
+      "CRITICAL": 0.167
+    },
+    "radius_km": 2.59
+  },
+  {
+    "cluster_id": 5,
+    "lat": 33.78644628606507,
+    "lon": -118.2740395334561,
+    "crime_count": 1629,
+    "tier": "HIGH",
+    "severity_dist": {
+      "CRITICAL": 0.354,
+      "HIGH": 0.244,
+      "LOW": 0.238,
+      "MEDIUM": 0.165
+    },
+    "radius_km": 2.83
+  },
+  {
+    "cluster_id": 7,
+    "lat": 33.73543255360624,
+    "lon": -118.29009025341132,
+    "crime_count": 1539,
+    "tier": "CRITICAL",
+    "severity_dist": {
+      "CRITICAL": 0.35,
+      "HIGH": 0.255,
+      "LOW": 0.249,
+      "MEDIUM": 0.146
+    },
+    "radius_km": 1.95
+  },
+  {
+    "cluster_id": 3,
+    "lat": 34.30394890965732,
+    "lon": -118.44072975077881,
+    "crime_count": 642,
+    "tier": "HIGH",
+    "severity_dist": {
+      "CRITICAL": 0.291,
+      "LOW": 0.26,
+      "HIGH": 0.232,
+      "MEDIUM": 0.217
+    },
+    "radius_km": 2.16
+  },
+  {
+    "cluster_id": 6,
+    "lat": 34.253232301740816,
+    "lon": -118.59375647969053,
+    "crime_count": 517,
+    "tier": "HIGH",
+    "severity_dist": {
+      "LOW": 0.313,
+      "CRITICAL": 0.298,
+      "HIGH": 0.201,
+      "MEDIUM": 0.188
+    },
+    "radius_km": 1.72
+  },
+  {
+    "cluster_id": 13,
+    "lat": 33.95858477690288,
+    "lon": -118.43221732283463,
+    "crime_count": 381,
+    "tier": "HIGH",
+    "severity_dist": {
+      "HIGH": 0.344,
+      "MEDIUM": 0.252,
+      "CRITICAL": 0.218,
+      "LOW": 0.186
+    },
+    "radius_km": 1.53
+  },
+  {
+    "cluster_id": 17,
+    "lat": 34.26189230769231,
+    "lon": -118.51863626373625,
+    "crime_count": 364,
+    "tier": "MEDIUM",
+    "severity_dist": {
+      "MEDIUM": 0.319,
+      "HIGH": 0.258,
+      "LOW": 0.236,
+      "CRITICAL": 0.187
+    },
+    "radius_km": 1.74
+  },
+  {
+    "cluster_id": 4,
+    "lat": 34.252877203647415,
+    "lon": -118.28638844984802,
+    "crime_count": 329,
+    "tier": "HIGH",
+    "severity_dist": {
+      "HIGH": 0.343,
+      "LOW": 0.274,
+      "MEDIUM": 0.195,
+      "CRITICAL": 0.188
+    },
+    "radius_km": 1.66
+  },
+  {
+    "cluster_id": 8,
+    "lat": 33.82969322580645,
+    "lon": -118.30485967741936,
+    "crime_count": 310,
+    "tier": "CRITICAL",
+    "severity_dist": {
+      "CRITICAL": 0.329,
+      "HIGH": 0.284,
+      "LOW": 0.223,
+      "MEDIUM": 0.165
+    },
+    "radius_km": 1.53
+  },
+  {
+    "cluster_id": 11,
+    "lat": 34.263541132075474,
+    "lon": -118.49951698113207,
+    "crime_count": 265,
+    "tier": "HIGH",
+    "severity_dist": {
+      "MEDIUM": 0.272,
+      "HIGH": 0.249,
+      "CRITICAL": 0.245,
+      "LOW": 0.234
+    },
+    "radius_km": 1.23
+  },
+  {
+    "cluster_id": 10,
+    "lat": 34.18811556603773,
+    "lon": -118.62524622641509,
+    "crime_count": 212,
+    "tier": "MEDIUM",
+    "severity_dist": {
+      "MEDIUM": 0.448,
+      "CRITICAL": 0.222,
+      "LOW": 0.189,
+      "HIGH": 0.142
+    },
+    "radius_km": 0.7
+  },
+  {
+    "cluster_id": 20,
+    "lat": 34.260995336787566,
+    "lon": -118.31447927461143,
+    "crime_count": 193,
+    "tier": "HIGH",
+    "severity_dist": {
+      "HIGH": 0.326,
+      "LOW": 0.269,
+      "CRITICAL": 0.212,
+      "MEDIUM": 0.192
+    },
+    "radius_km": 1.11
+  },
+  {
+    "cluster_id": 16,
+    "lat": 33.856657142857145,
+    "lon": -118.30025939849627,
+    "crime_count": 133,
+    "tier": "HIGH",
+    "severity_dist": {
+      "MEDIUM": 0.331,
+      "HIGH": 0.286,
+      "CRITICAL": 0.218,
+      "LOW": 0.165
+    },
+    "radius_km": 0.85
+  },
+  {
+    "cluster_id": 2,
+    "lat": 33.74991221374045,
+    "lon": -118.30678015267176,
+    "crime_count": 131,
+    "tier": "HIGH",
+    "severity_dist": {
+      "HIGH": 0.29,
+      "CRITICAL": 0.282,
+      "MEDIUM": 0.267,
+      "LOW": 0.16
+    },
+    "radius_km": 1.02
+  },
+  {
+    "cluster_id": 14,
+    "lat": 34.15871230769231,
+    "lon": -118.49338846153846,
+    "crime_count": 130,
+    "tier": "HIGH",
+    "severity_dist": {
+      "HIGH": 0.362,
+      "LOW": 0.262,
+      "MEDIUM": 0.208,
+      "CRITICAL": 0.169
+    },
+    "radius_km": 0.89
+  },
+  {
+    "cluster_id": 23,
+    "lat": 34.13170434782609,
+    "lon": -118.3431641304348,
+    "crime_count": 92,
+    "tier": "CRITICAL",
+    "severity_dist": {
+      "HIGH": 0.402,
+      "CRITICAL": 0.228,
+      "LOW": 0.207,
+      "MEDIUM": 0.163
+    },
+    "radius_km": 0.78
+  },
+  {
+    "cluster_id": 21,
+    "lat": 34.306569411764706,
+    "lon": -118.47400352941177,
+    "crime_count": 85,
+    "tier": "CRITICAL",
+    "severity_dist": {
+      "CRITICAL": 0.353,
+      "HIGH": 0.259,
+      "LOW": 0.235,
+      "MEDIUM": 0.153
+    },
+    "radius_km": 0.8
+  },
+  {
+    "cluster_id": 19,
+    "lat": 34.274191780821916,
+    "lon": -118.44784657534245,
+    "crime_count": 73,
+    "tier": "HIGH",
+    "severity_dist": {
+      "CRITICAL": 0.315,
+      "LOW": 0.26,
+      "HIGH": 0.233,
+      "MEDIUM": 0.192
+    },
+    "radius_km": 0.85
+  },
+  {
+    "cluster_id": 12,
+    "lat": 34.21246229508197,
+    "lon": -118.35361147540983,
+    "crime_count": 61,
+    "tier": "HIGH",
+    "severity_dist": {
+      "HIGH": 0.361,
+      "LOW": 0.279,
+      "CRITICAL": 0.197,
+      "MEDIUM": 0.164
+    },
+    "radius_km": 0.66
+  },
+  {
+    "cluster_id": 18,
+    "lat": 34.27524237288136,
+    "lon": -118.5665186440678,
+    "crime_count": 59,
+    "tier": "MEDIUM",
+    "severity_dist": {
+      "MEDIUM": 0.441,
+      "HIGH": 0.203,
+      "CRITICAL": 0.203,
+      "LOW": 0.153
+    },
+    "radius_km": 0.44
+  },
+  {
+    "cluster_id": 15,
+    "lat": 34.046036206896545,
+    "lon": -118.52527413793105,
+    "crime_count": 58,
+    "tier": "MEDIUM",
+    "severity_dist": {
+      "MEDIUM": 0.414,
+      "LOW": 0.224,
+      "HIGH": 0.207,
+      "CRITICAL": 0.155
+    },
+    "radius_km": 0.6
+  },
+  {
+    "cluster_id": 30,
+    "lat": 34.23360545454545,
+    "lon": -118.51114000000001,
+    "crime_count": 55,
+    "tier": "LOW",
+    "severity_dist": {
+      "MEDIUM": 0.6,
+      "CRITICAL": 0.182,
+      "LOW": 0.127,
+      "HIGH": 0.091
+    },
+    "radius_km": 0.39
+  },
+  {
+    "cluster_id": 32,
+    "lat": 34.32076222222223,
+    "lon": -118.46041333333338,
+    "crime_count": 45,
+    "tier": "HIGH",
+    "severity_dist": {
+      "LOW": 0.356,
+      "CRITICAL": 0.356,
+      "HIGH": 0.156,
+      "MEDIUM": 0.133
+    },
+    "radius_km": 0.54
+  },
+  {
+    "cluster_id": 27,
+    "lat": 33.973822727272726,
+    "lon": -118.39992499999995,
+    "crime_count": 44,
+    "tier": "HIGH",
+    "severity_dist": {
+      "HIGH": 0.409,
+      "LOW": 0.25,
+      "MEDIUM": 0.205,
+      "CRITICAL": 0.136
+    },
+    "radius_km": 0.52
+  },
+  {
+    "cluster_id": 25,
+    "lat": 33.93076829268293,
+    "lon": -118.37696829268293,
+    "crime_count": 41,
+    "tier": "CRITICAL",
+    "severity_dist": {
+      "HIGH": 0.39,
+      "LOW": 0.268,
+      "CRITICAL": 0.22,
+      "MEDIUM": 0.122
+    },
+    "radius_km": 0.47
+  },
+  {
+    "cluster_id": 28,
+    "lat": 34.13547,
+    "lon": -118.2708725,
+    "crime_count": 40,
+    "tier": "LOW",
+    "severity_dist": {
+      "MEDIUM": 0.525,
+      "LOW": 0.2,
+      "CRITICAL": 0.15,
+      "HIGH": 0.125
+    },
+    "radius_km": 0.4
+  },
+  {
+    "cluster_id": 29,
+    "lat": 34.30994,
+    "lon": -118.46007,
+    "crime_count": 40,
+    "tier": "HIGH",
+    "severity_dist": {
+      "LOW": 0.45,
+      "CRITICAL": 0.325,
+      "HIGH": 0.125,
+      "MEDIUM": 0.1
+    },
+    "radius_km": 0.51
+  },
+  {
+    "cluster_id": 33,
+    "lat": 34.04367692307693,
+    "lon": -118.56012564102564,
+    "crime_count": 39,
+    "tier": "CRITICAL",
+    "severity_dist": {
+      "HIGH": 0.59,
+      "MEDIUM": 0.231,
+      "LOW": 0.128,
+      "CRITICAL": 0.051
+    },
+    "radius_km": 0.47
+  },
+  {
+    "cluster_id": 22,
+    "lat": 33.86948378378378,
+    "lon": -118.28502972972971,
+    "crime_count": 37,
+    "tier": "CRITICAL",
+    "severity_dist": {
+      "HIGH": 0.514,
+      "MEDIUM": 0.216,
+      "CRITICAL": 0.216,
+      "LOW": 0.054
+    },
+    "radius_km": 0.38
+  },
+  {
+    "cluster_id": 24,
+    "lat": 34.32403714285714,
+    "lon": -118.43769142857143,
+    "crime_count": 35,
+    "tier": "HIGH",
+    "severity_dist": {
+      "CRITICAL": 0.343,
+      "LOW": 0.343,
+      "HIGH": 0.2,
+      "MEDIUM": 0.114
+    },
+    "radius_km": 0.44
+  },
+  {
+    "cluster_id": 26,
+    "lat": 34.32358,
+    "lon": -118.49068571428572,
+    "crime_count": 35,
+    "tier": "HIGH",
+    "severity_dist": {
+      "HIGH": 0.371,
+      "LOW": 0.286,
+      "MEDIUM": 0.257,
+      "CRITICAL": 0.086
+    },
+    "radius_km": 0.52
+  },
+  {
+    "cluster_id": 31,
+    "lat": 34.17091764705882,
+    "lon": -118.50085882352941,
+    "crime_count": 34,
+    "tier": "CRITICAL",
+    "severity_dist": {
+      "HIGH": 0.382,
+      "CRITICAL": 0.324,
+      "MEDIUM": 0.206,
+      "LOW": 0.088
+    },
+    "radius_km": 0.43
+  },
+  {
+    "cluster_id": 34,
+    "lat": 34.11439393939394,
+    "lon": -118.36267878787879,
+    "crime_count": 33,
+    "tier": "MEDIUM",
+    "severity_dist": {
+      "LOW": 0.303,
+      "MEDIUM": 0.273,
+      "CRITICAL": 0.212,
+      "HIGH": 0.212
+    },
+    "radius_km": 0.44
+  },
+  {
+    "cluster_id": 35,
+    "lat": 34.18789,
+    "lon": -118.64040666666668,
+    "crime_count": 30,
+    "tier": "MEDIUM",
+    "severity_dist": {
+      "MEDIUM": 0.4,
+      "LOW": 0.233,
+      "HIGH": 0.2,
+      "CRITICAL": 0.167
+    },
+    "radius_km": 0.48
+  }
+]

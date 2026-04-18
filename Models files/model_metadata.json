@@ -1,0 +1,66 @@
+{
+  "project": "CrimeLense ML Pipeline v2",
+  "dataset": "LA Crime Dataset 2020-Present (~964K rows)",
+  "total_features": 42,
+  "train_size": 771751,
+  "test_size": 192938,
+  "models": {
+    "crime_category": {
+      "algorithm": "XGBoost + LightGBM + CatBoost (Soft Voting)",
+      "classes": [
+        "OTHER",
+        "PROPERTY_CRIME",
+        "SEXUAL_CRIME",
+        "VANDALISM",
+        "VEHICLE_CRIME",
+        "VIOLENT_CRIME"
+      ],
+      "accuracy": 93.45,
+      "f1_score": 0.9324,
+      "weights": {
+        "xgb": 0.4,
+        "lgb": 0.35,
+        "cb": 0.25
+      }
+    },
+    "binary_risk": {
+      "algorithm": "XGBoost + LightGBM + CatBoost (Soft Voting)",
+      "classes": [
+        "SAFE",
+        "DANGEROUS"
+      ],
+      "accuracy": 89.57,
+      "f1_score": 0.896,
+      "roc_auc": 0.9718,
+      "threshold": 0.49,
+      "weights": {
+        "xgb": 0.4,
+        "lgb": 0.35,
+        "cb": 0.25
+      }
+    },
+    "severity": {
+      "algorithm": "XGBoost + LightGBM + CatBoost + Stacking",
+      "classes": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ],
+      "accuracy": 89.54,
+      "f1_score": 0.895,
+      "weights": {
+        "xgb": 0.4,
+        "lgb": 0.35,
+        "cb": 0.25
+      },
+      "stacking": true
+    },
+    "hotspot_dbscan": {
+      "algorithm": "DBSCAN",
+      "n_clusters": 36,
+      "eps": 0.04,
+      "min_samples": 30
+    }
+  }
+}
